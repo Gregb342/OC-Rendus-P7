@@ -13,16 +13,16 @@ namespace P7CreateRestApi.Migrations
                 name: "Bids",
                 columns: table => new
                 {
-                    BidListId = table.Column<int>(type: "int", nullable: false)
+                    BidId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Account = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BidType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BidQuantity = table.Column<double>(type: "float", nullable: true),
                     AskQuantity = table.Column<double>(type: "float", nullable: true),
-                    Bid = table.Column<double>(type: "float", nullable: true),
-                    Ask = table.Column<double>(type: "float", nullable: true),
+                    BidPrice = table.Column<double>(type: "float", nullable: true),
+                    AskPrice = table.Column<double>(type: "float", nullable: true),
                     Benchmark = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BidListDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    BidDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Commentary = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BidSecurity = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BidStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -39,7 +39,7 @@ namespace P7CreateRestApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bids", x => x.BidListId);
+                    table.PrimaryKey("PK_Bids", x => x.BidId);
                 });
 
             migrationBuilder.CreateTable(

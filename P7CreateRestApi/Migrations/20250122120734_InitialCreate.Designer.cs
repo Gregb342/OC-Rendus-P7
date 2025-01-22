@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace P7CreateRestApi.Migrations
 {
     [DbContext(typeof(LocalDbContext))]
-    [Migration("20250122095721_InitialCreate")]
+    [Migration("20250122120734_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,19 +89,19 @@ namespace P7CreateRestApi.Migrations
                     b.ToTable("Rules");
                 });
 
-            modelBuilder.Entity("Dot.Net.WebApi.Domain.BidList", b =>
+            modelBuilder.Entity("Dot.Net.WebApi.Domain.Bid", b =>
                 {
-                    b.Property<int>("BidListId")
+                    b.Property<int>("BidId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BidListId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BidId"), 1L, 1);
 
                     b.Property<string>("Account")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Ask")
+                    b.Property<double?>("AskPrice")
                         .HasColumnType("float");
 
                     b.Property<double?>("AskQuantity")
@@ -111,11 +111,11 @@ namespace P7CreateRestApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Bid")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime?>("BidListDate")
+                    b.Property<DateTime?>("BidDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<double?>("BidPrice")
+                        .HasColumnType("float");
 
                     b.Property<double?>("BidQuantity")
                         .HasColumnType("float");
@@ -174,7 +174,7 @@ namespace P7CreateRestApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("BidListId");
+                    b.HasKey("BidId");
 
                     b.ToTable("Bids");
                 });
