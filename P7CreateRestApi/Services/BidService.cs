@@ -1,6 +1,7 @@
 ﻿using Dot.Net.WebApi.Domain;
 using P7CreateRestApi.Repositories.Interfaces;
 using P7CreateRestApi.Services.Interfaces;
+using P7CreateRestApi.ViewsModels;
 
 namespace P7CreateRestApi.Services
 {
@@ -18,26 +19,47 @@ namespace P7CreateRestApi.Services
             await _bidRepository.AddBidAsync(bid);
         }
 
-        public async Task<List<Bid>> FindAllBids()
+        public async Task<List<Bid>> GetAllBids()
         {
-            return await _bidRepository.FindAllBidsAsync();
+            return await _bidRepository.GetAllBidsAsync();
         }
 
-        public async Task<Bid> FindBidByIdAsync(int bidId)
+        public async Task<Bid> GetBidByIdAsync(int bidId)
         {
-            return await _bidRepository.FindBidByIdAsync(bidId);
+            Bid existingBid = await _bidRepository.GetBidByIdAsync(bidId);
+
+            if (existingBid is null)
+            {
+                throw new KeyNotFoundException($"L'offre {existingBid.BidId} n'existe pas");
+            }
+            
+            return existingBid;
         }
 
         public async Task RemoveBid(int bidId)
         {
-            await _bidRepository.RemoveBidAsync(bidId);
+            Bid bid = await _bidRepository.GetBidByIdAsync(bidId)
+                       ?? throw new KeyNotFoundException($"L'offre {bidId} n'existe pas");
+
+            await _bidRepository.RemoveBidAsync(bid.BidId);
         }
 
-        public async Task UpdateBid(Bid bidList)
+        public async Task<Bid> UpdateBid(UpdateBidViewModel newBid)
         {
-            Bid bid = await _bidRepository.FindBidByIdAsync(bidList.BidId);
+            Bid existingBid = await _bidRepository.GetBidByIdAsync(newBid.BidId);
 
-            // TODO IMPLEMENTER LE RESTE DE L'UPDATE
+            if (existingBid is null)
+            {
+                throw new KeyNotFoundException($"L'offre {newBid.BidId} n'existe pas");
+            }
+
+            existingBid.Account = newBid.Account;
+            existingBid.BidType = newBid.BidType;
+            existingBid.BidQuantity = newBid.BidQuantity;
+
+            await _bidRepository.UpdateBidAsync(existingBid);
+
+            return existingBid;
         }
     }
 }

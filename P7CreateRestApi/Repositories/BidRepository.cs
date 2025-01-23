@@ -20,12 +20,12 @@ namespace P7CreateRestApi.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Bid>> FindAllBidsAsync()
+        public async Task<List<Bid>> GetAllBidsAsync()
         {
             return await _context.Bids.ToListAsync();
         }
 
-        public async Task<Bid> FindBidByIdAsync(int bidId)
+        public async Task<Bid> GetBidByIdAsync(int bidId)
         {
             return await _context.Bids.FirstOrDefaultAsync(b => b.BidId == bidId);
         }

@@ -1,5 +1,9 @@
 using Dot.Net.WebApi.Domain;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Services;
+using P7CreateRestApi.Services.Interfaces;
+using P7CreateRestApi.ViewsModels;
+using P7CreateRestApi.ViewsModels.Bids;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -7,34 +11,102 @@ namespace Dot.Net.WebApi.Controllers
     [Route("[controller]")]
     public class BidController : ControllerBase
     {
-        [HttpGet]
-        [Route("validate")]
-        public IActionResult Validate([FromBody] Bid bid)
-        {
-            // TODO: check data valid and save to db, after saving return bid list
-            return Ok();
-        }
+        private readonly IBidService _bidService;
 
-        [HttpGet]
-        [Route("update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
+        public BidController(IBidService bidService)
         {
-            return Ok();
+            _bidService = bidService;
         }
 
         [HttpPost]
-        [Route("update/{id}")]
-        public IActionResult UpdateBid(int id, [FromBody] Bid bid)
+        [Route("")]
+        public async Task<IActionResult> AddBid([FromBody] AddBidViewModel bidViewModel)
         {
-            // TODO: check required fields, if valid call service to update Bid and return list Bid
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Bid bid = new Bid
+            {
+                Account = bidViewModel.Account,
+                BidQuantity = bidViewModel.BidQuantity,
+                BidType = bidViewModel.BidType,
+                Commentary = bidViewModel.Commentary,
+            };
+
+            await _bidService.AddBid(bid);
+            return Ok(bid);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetBid(int id)
+        {
+            Bid existingBid = await _bidService.GetBidByIdAsync(id);
+
+            if (existingBid is null)
+            {
+                return NotFound($"L'offre {id} n'existe pas.");
+            }
+
+            return Ok(existingBid);
+        }
+
+        [HttpGet]
+        [Route("All")]
+        public async Task<IActionResult> GetAllBids()
+        {
+            List<Bid> bidList = await _bidService.GetAllBids();
+
+            if (bidList is null)
+            {
+                return NotFound("Pas d'offres trouvé dans la base.");
+            }
+
+            return Ok(bidList);
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> UpdateBid(int id, [FromBody] UpdateBidViewModel bidViewModel)
+        {
+            try
+            {
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (id != bidViewModel.BidId)
+                {
+                    return BadRequest("L'ID dans l'URL ne correspond pas à l'ID du corps de la requête.");
+                }
+
+                Bid updatedBid = await _bidService.UpdateBid(bidViewModel);
+
+                return Ok(updatedBid);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult DeleteBid(int id)
+        public async Task<IActionResult> DeleteBid(int id)
         {
+
+            await _bidService.RemoveBid(id);
+
             return Ok();
         }
     }
+    // TODO ENVISAGER L'AJOUT D'UN MIDDLEWARE POUR LA GESTION DES EXCEPTIONS
 }
