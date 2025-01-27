@@ -43,7 +43,7 @@ namespace Dot.Net.WebApi.Controllers
         [Route("{id}")]
         public async Task<IActionResult> GetBid(int id)
         {
-            Bid existingBid = await _bidService.GetBidByIdAsync(id);
+            GetBidViewModel existingBid = await _bidService.GetBidByIdAsync(id);
 
             if (existingBid is null)
             {
@@ -57,7 +57,7 @@ namespace Dot.Net.WebApi.Controllers
         [Route("All")]
         public async Task<IActionResult> GetAllBids()
         {
-            List<Bid> bidList = await _bidService.GetAllBids();
+            List<GetBidViewModel> bidList = await _bidService.GetAllBids();
 
             if (bidList is null)
             {
@@ -84,7 +84,7 @@ namespace Dot.Net.WebApi.Controllers
                     return BadRequest("L'ID dans l'URL ne correspond pas à l'ID du corps de la requête.");
                 }
 
-                Bid updatedBid = await _bidService.UpdateBid(bidViewModel);
+                GetBidViewModel updatedBid = await _bidService.UpdateBid(bidViewModel);
 
                 return Ok(updatedBid);
             }

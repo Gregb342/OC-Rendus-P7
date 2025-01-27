@@ -2,6 +2,7 @@
 using P7CreateRestApi.Repositories.Interfaces;
 using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels;
+using P7CreateRestApi.ViewsModels.Bids;
 
 namespace P7CreateRestApi.Services
 {
@@ -19,39 +20,59 @@ namespace P7CreateRestApi.Services
             await _bidRepository.AddBidAsync(bid);
         }
 
-        public async Task<List<Bid>> GetAllBids()
+        public async Task<List<GetBidViewModel>> GetAllBids()
         {
-            return await _bidRepository.GetAllBidsAsync();
+            List<Bid> AllBids = await _bidRepository.GetAllBidsAsync();
+
+            if (AllBids is null)
+            {
+                throw new ArgumentNullException(nameof(AllBids));
+            }
+
+            List<GetBidViewModel> AllBidsViewModel = new List<GetBidViewModel>();
+
+            foreach (var Bid in AllBids)
+            {
+                GetBidViewModel getBidViewModel = new GetBidViewModel();
+
+                getBidViewModel.BidId = Bid.BidId;
+                getBidViewModel.Account = Bid.Account;
+                getBidViewModel.BidQuantity = Bid.BidQuantity;
+                getBidViewModel.BidType = Bid.BidType;
+
+                AllBidsViewModel.Add(getBidViewModel);
+            }
+
+            return AllBidsViewModel;
         }
 
-        public async Task<Bid> GetBidByIdAsync(int bidId)
+        public async Task<GetBidViewModel> GetBidByIdAsync(int bidId)
         {
-            Bid existingBid = await _bidRepository.GetBidByIdAsync(bidId);
+            Bid existingBid = await _bidRepository.GetBidByIdAsync(bidId) 
+                    ?? throw new KeyNotFoundException($"L'offre {bidId} n'existe pas");
 
-            if (existingBid is null)
-            {
-                throw new KeyNotFoundException($"L'offre {existingBid.BidId} n'existe pas");
-            }
+            GetBidViewModel bidViewModel = new GetBidViewModel();
+
+            bidViewModel.BidId = existingBid.BidId;
+            bidViewModel.Account = existingBid.Account;
+            bidViewModel.BidQuantity = existingBid.BidQuantity;
+            bidViewModel.BidType = existingBid.BidType; 
             
-            return existingBid;
+            return bidViewModel;
         }
 
         public async Task RemoveBid(int bidId)
         {
             Bid bid = await _bidRepository.GetBidByIdAsync(bidId)
-                       ?? throw new KeyNotFoundException($"L'offre {bidId} n'existe pas");
+                        ?? throw new KeyNotFoundException($"L'offre {bidId} n'existe pas");
 
             await _bidRepository.RemoveBidAsync(bid.BidId);
         }
 
-        public async Task<Bid> UpdateBid(UpdateBidViewModel newBid)
+        public async Task<GetBidViewModel> UpdateBid(UpdateBidViewModel newBid)
         {
-            Bid existingBid = await _bidRepository.GetBidByIdAsync(newBid.BidId);
-
-            if (existingBid is null)
-            {
-                throw new KeyNotFoundException($"L'offre {newBid.BidId} n'existe pas");
-            }
+            Bid existingBid = await _bidRepository.GetBidByIdAsync(newBid.BidId) 
+                        ?? throw new KeyNotFoundException($"L'offre {newBid.BidId} n'existe pas");
 
             existingBid.Account = newBid.Account;
             existingBid.BidType = newBid.BidType;
@@ -59,7 +80,14 @@ namespace P7CreateRestApi.Services
 
             await _bidRepository.UpdateBidAsync(existingBid);
 
-            return existingBid;
+            GetBidViewModel getBidViewModel = new GetBidViewModel();
+
+            getBidViewModel.BidId = existingBid.BidId;
+            getBidViewModel.Account = existingBid.Account;
+            getBidViewModel.BidQuantity= existingBid.BidQuantity;
+            getBidViewModel.BidType= existingBid.BidType;
+
+            return getBidViewModel;
         }
     }
 }
