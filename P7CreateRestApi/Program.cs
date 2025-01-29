@@ -1,6 +1,7 @@
 using Dot.Net.WebApi.Data;
 using Dot.Net.WebApi.Repositories;
 using Microsoft.EntityFrameworkCore;
+using P7CreateRestApi.Exceptions;
 using P7CreateRestApi.Repositories;
 using P7CreateRestApi.Repositories.Interfaces;
 using P7CreateRestApi.Services;
@@ -32,6 +33,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
