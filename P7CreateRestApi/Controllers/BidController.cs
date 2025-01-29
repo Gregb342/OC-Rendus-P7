@@ -71,31 +71,19 @@ namespace Dot.Net.WebApi.Controllers
         [Route("{id}")]
         public async Task<IActionResult> UpdateBid(int id, [FromBody] UpdateBidViewModel bidViewModel)
         {
-            try
+            if (!ModelState.IsValid)
             {
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                if (id != bidViewModel.BidId)
-                {
-                    return BadRequest("L'ID dans l'URL ne correspond pas à l'ID du corps de la requête.");
-                }
-
-                GetBidViewModel updatedBid = await _bidService.UpdateBid(bidViewModel);
-
-                return Ok(updatedBid);
+                return BadRequest(ModelState);
             }
-            catch (KeyNotFoundException ex)
+
+            if (id != bidViewModel.BidId)
             {
-                return NotFound(ex.Message);
+                return BadRequest("L'ID dans l'URL ne correspond pas à l'ID du corps de la requête.");
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
+
+            GetBidViewModel updatedBid = await _bidService.UpdateBid(bidViewModel);
+
+            return Ok(updatedBid);
         }
 
         [HttpDelete]
@@ -108,6 +96,4 @@ namespace Dot.Net.WebApi.Controllers
             return Ok();
         }
     }
-    // TODO ENVISAGER L'AJOUT D'UN MIDDLEWARE POUR LA GESTION DES EXCEPTIONS
-    // TODO BIEN TRAVAILLER LES RETOUR DE MESSAGE D'ERREUR
 }

@@ -22,43 +22,29 @@ namespace P7CreateRestApi.Services
 
         public async Task<List<GetBidViewModel>> GetAllBids()
         {
-            List<Bid> AllBids = (List<Bid>) await _bidRepository.GetAllAsync();
+            List<Bid> allBids = (List<Bid>) await _bidRepository.GetAllAsync();
 
-            if (AllBids is null)
+            return allBids.Select(b => new GetBidViewModel
             {
-                throw new ArgumentNullException(nameof(AllBids));
-            }
-
-            List<GetBidViewModel> AllBidsViewModel = new List<GetBidViewModel>();
-
-            foreach (var Bid in AllBids)
-            {
-                GetBidViewModel getBidViewModel = new GetBidViewModel();
-
-                getBidViewModel.BidId = Bid.BidId;
-                getBidViewModel.Account = Bid.Account;
-                getBidViewModel.BidQuantity = Bid.BidQuantity;
-                getBidViewModel.BidType = Bid.BidType;
-
-                AllBidsViewModel.Add(getBidViewModel);
-            }
-
-            return AllBidsViewModel;
+                BidId = b.BidId,
+                Account = b.Account,
+                BidQuantity = b.BidQuantity,
+                BidType = b.BidType
+            }).ToList();
         }
 
         public async Task<GetBidViewModel> GetBidByIdAsync(int bidId)
         {
-            Bid existingBid = await _bidRepository.GetByIdAsync(bidId) 
-                    ?? throw new KeyNotFoundException($"L'offre {bidId} n'existe pas");
+            Bid existingBid = await _bidRepository.GetByIdAsync(bidId)
+                ?? throw new KeyNotFoundException($"L'offre {bidId} n'existe pas");
 
-            GetBidViewModel bidViewModel = new GetBidViewModel();
-
-            bidViewModel.BidId = existingBid.BidId;
-            bidViewModel.Account = existingBid.Account;
-            bidViewModel.BidQuantity = existingBid.BidQuantity;
-            bidViewModel.BidType = existingBid.BidType; 
-            
-            return bidViewModel;
+            return new GetBidViewModel
+            {
+                BidId = existingBid.BidId,
+                Account = existingBid.Account,
+                BidQuantity = existingBid.BidQuantity,
+                BidType = existingBid.BidType
+            };
         }
 
         public async Task RemoveBid(int bidId)
