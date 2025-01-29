@@ -1,5 +1,10 @@
 using Dot.Net.WebApi.Data;
+using Dot.Net.WebApi.Repositories;
 using Microsoft.EntityFrameworkCore;
+using P7CreateRestApi.Repositories;
+using P7CreateRestApi.Repositories.Interfaces;
+using P7CreateRestApi.Services;
+using P7CreateRestApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -13,6 +18,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<LocalDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IBidRepository, BidRepository>();
+builder.Services.AddScoped<IBidService, BidService>();  
 
 var app = builder.Build();
 
