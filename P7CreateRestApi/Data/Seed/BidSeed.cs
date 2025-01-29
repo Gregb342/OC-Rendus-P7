@@ -10,6 +10,7 @@ namespace P7CreateRestApi.Data.Seed
             modelBuilder.Entity<Bid>().HasData(
                 new Bid
                 {
+                    BidId = 1,
                     Account = "Account1",
                     BidType = "Type1",
                     BidQuantity = 100.5,
@@ -34,6 +35,7 @@ namespace P7CreateRestApi.Data.Seed
                 },
                 new Bid
                 {
+                    BidId = 2,
                     Account = "Account2",
                     BidType = "Type2",
                     BidQuantity = 300.0,

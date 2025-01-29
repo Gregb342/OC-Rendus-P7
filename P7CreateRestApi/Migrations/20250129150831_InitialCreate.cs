@@ -21,21 +21,21 @@ namespace P7CreateRestApi.Migrations
                     AskQuantity = table.Column<double>(type: "float", nullable: true),
                     BidPrice = table.Column<double>(type: "float", nullable: true),
                     AskPrice = table.Column<double>(type: "float", nullable: true),
-                    Benchmark = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Benchmark = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BidDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Commentary = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BidSecurity = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BidStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Trader = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Book = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreationName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Commentary = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BidSecurity = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BidStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Trader = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Book = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreationName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    RevisionName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RevisionName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RevisionDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DealName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DealType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SourceListId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Side = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DealName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DealType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SourceListId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Side = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -140,6 +140,16 @@ namespace P7CreateRestApi.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Bids",
+                columns: new[] { "BidId", "Account", "AskPrice", "AskQuantity", "Benchmark", "BidDate", "BidPrice", "BidQuantity", "BidSecurity", "BidStatus", "BidType", "Book", "Commentary", "CreationDate", "CreationName", "DealName", "DealType", "RevisionDate", "RevisionName", "Side", "SourceListId", "Trader" },
+                values: new object[] { 1, "Account1", 1520.25, 200.0, "Benchmark1", new DateTime(2025, 1, 24, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7060), 1500.75, 100.5, "Security1", "Pending", "Type1", "Book1", "Test Commentary 1", new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7066), "System", "Deal1", "TypeA", new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7066), "System", "Buy", "Source1", "Trader1" });
+
+            migrationBuilder.InsertData(
+                table: "Bids",
+                columns: new[] { "BidId", "Account", "AskPrice", "AskQuantity", "Benchmark", "BidDate", "BidPrice", "BidQuantity", "BidSecurity", "BidStatus", "BidType", "Book", "Commentary", "CreationDate", "CreationName", "DealName", "DealType", "RevisionDate", "RevisionName", "Side", "SourceListId", "Trader" },
+                values: new object[] { 2, "Account2", 1650.5, 350.0, "Benchmark2", new DateTime(2025, 1, 26, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7068), 1600.0, 300.0, "Security2", "Completed", "Type2", "Book2", "Test Commentary 2", new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7069), "Admin", "Deal2", "TypeB", new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7070), "Admin", "Sell", "Source2", "Trader2" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

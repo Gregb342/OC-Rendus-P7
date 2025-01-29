@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace P7CreateRestApi.Migrations
 {
     [DbContext(typeof(LocalDbContext))]
-    [Migration("20250122120734_InitialCreate")]
+    [Migration("20250129150831_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,7 +108,6 @@ namespace P7CreateRestApi.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Benchmark")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("BidDate")
@@ -121,11 +120,9 @@ namespace P7CreateRestApi.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("BidSecurity")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BidStatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BidType")
@@ -133,50 +130,93 @@ namespace P7CreateRestApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Book")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Commentary")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreationName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DealName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DealType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("RevisionDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("RevisionName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Side")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SourceListId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Trader")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("BidId");
 
                     b.ToTable("Bids");
+
+                    b.HasData(
+                        new
+                        {
+                            BidId = 1,
+                            Account = "Account1",
+                            AskPrice = 1520.25,
+                            AskQuantity = 200.0,
+                            Benchmark = "Benchmark1",
+                            BidDate = new DateTime(2025, 1, 24, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7060),
+                            BidPrice = 1500.75,
+                            BidQuantity = 100.5,
+                            BidSecurity = "Security1",
+                            BidStatus = "Pending",
+                            BidType = "Type1",
+                            Book = "Book1",
+                            Commentary = "Test Commentary 1",
+                            CreationDate = new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7066),
+                            CreationName = "System",
+                            DealName = "Deal1",
+                            DealType = "TypeA",
+                            RevisionDate = new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7066),
+                            RevisionName = "System",
+                            Side = "Buy",
+                            SourceListId = "Source1",
+                            Trader = "Trader1"
+                        },
+                        new
+                        {
+                            BidId = 2,
+                            Account = "Account2",
+                            AskPrice = 1650.5,
+                            AskQuantity = 350.0,
+                            Benchmark = "Benchmark2",
+                            BidDate = new DateTime(2025, 1, 26, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7068),
+                            BidPrice = 1600.0,
+                            BidQuantity = 300.0,
+                            BidSecurity = "Security2",
+                            BidStatus = "Completed",
+                            BidType = "Type2",
+                            Book = "Book2",
+                            Commentary = "Test Commentary 2",
+                            CreationDate = new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7069),
+                            CreationName = "Admin",
+                            DealName = "Deal2",
+                            DealType = "TypeB",
+                            RevisionDate = new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7070),
+                            RevisionName = "Admin",
+                            Side = "Sell",
+                            SourceListId = "Source2",
+                            Trader = "Trader2"
+                        });
                 });
 
             modelBuilder.Entity("Dot.Net.WebApi.Domain.CurvePoint", b =>
