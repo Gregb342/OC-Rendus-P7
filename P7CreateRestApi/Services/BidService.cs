@@ -17,12 +17,12 @@ namespace P7CreateRestApi.Services
 
         public async Task AddBid(Bid bid)
         {
-            await _bidRepository.AddBidAsync(bid);
+            await _bidRepository.AddAsync(bid);
         }
 
         public async Task<List<GetBidViewModel>> GetAllBids()
         {
-            List<Bid> AllBids = await _bidRepository.GetAllBidsAsync();
+            List<Bid> AllBids = (List<Bid>) await _bidRepository.GetAllAsync();
 
             if (AllBids is null)
             {
@@ -48,7 +48,7 @@ namespace P7CreateRestApi.Services
 
         public async Task<GetBidViewModel> GetBidByIdAsync(int bidId)
         {
-            Bid existingBid = await _bidRepository.GetBidByIdAsync(bidId) 
+            Bid existingBid = await _bidRepository.GetByIdAsync(bidId) 
                     ?? throw new KeyNotFoundException($"L'offre {bidId} n'existe pas");
 
             GetBidViewModel bidViewModel = new GetBidViewModel();
@@ -63,22 +63,22 @@ namespace P7CreateRestApi.Services
 
         public async Task RemoveBid(int bidId)
         {
-            Bid bid = await _bidRepository.GetBidByIdAsync(bidId)
+            Bid bid = await _bidRepository.GetByIdAsync(bidId)
                         ?? throw new KeyNotFoundException($"L'offre {bidId} n'existe pas");
 
-            await _bidRepository.RemoveBidAsync(bid.BidId);
+            await _bidRepository.DeleteAsync(bid.BidId);
         }
 
         public async Task<GetBidViewModel> UpdateBid(UpdateBidViewModel newBid)
         {
-            Bid existingBid = await _bidRepository.GetBidByIdAsync(newBid.BidId) 
+            Bid existingBid = await _bidRepository.GetByIdAsync(newBid.BidId) 
                         ?? throw new KeyNotFoundException($"L'offre {newBid.BidId} n'existe pas");
 
             existingBid.Account = newBid.Account;
             existingBid.BidType = newBid.BidType;
             existingBid.BidQuantity = newBid.BidQuantity;
 
-            await _bidRepository.UpdateBidAsync(existingBid);
+            await _bidRepository.UpdateAsync(existingBid);
 
             GetBidViewModel getBidViewModel = new GetBidViewModel();
 
