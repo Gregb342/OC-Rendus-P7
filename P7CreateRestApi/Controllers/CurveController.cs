@@ -1,57 +1,76 @@
 using Dot.Net.WebApi.Domain;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Services.Interfaces;
+using P7CreateRestApi.ViewsModels.CurvePoints;
 
 namespace Dot.Net.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CurveController : ControllerBase
+    public class CurvePointController : ControllerBase
     {
-        // TODO: Inject Curve Point service
+        private readonly ICurvePointService _curvePointService;
 
-        [HttpGet]
-        [Route("list")]
-        public IActionResult Home()
+        public CurvePointController(ICurvePointService curvePointService)
         {
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("add")]
-        public IActionResult AddCurvePoint([FromBody]CurvePoint curvePoint)
-        {
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("validate")]
-        public IActionResult Validate([FromBody]CurvePoint curvePoint)
-        {
-            // TODO: check data valid and save to db, after saving return bid list
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
-        {
-            // TODO: get CurvePoint by Id and to model then show to the form
-            return Ok();
+            _curvePointService = curvePointService;
         }
 
         [HttpPost]
-        [Route("update/{id}")]
-        public IActionResult UpdateCurvePoint(int id, [FromBody] CurvePoint curvePoint)
+        [Route("")]
+        public async Task<IActionResult> AddCurvePoint([FromBody] AddCurvePointViewModel model)
         {
-            // TODO: check required fields, if valid call service to update Curve and return Curve list
-            return Ok();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            CurvePoint cp = new CurvePoint
+            {
+                CurveId = model.CurveId,
+                AsOfDate = model.AsOfDate,
+                Term = model.Term,
+                CurvePointValue = model.CurvePointValue,
+                CreationDate = DateTime.UtcNow
+            };
+
+            await _curvePointService.AddCurvePoint(cp);
+            return Ok(cp);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetCurvePoint(int id)
+        {
+            var cp = await _curvePointService.GetCurvePointByIdAsync(id);
+            return Ok(cp);
+        }
+
+        [HttpGet]
+        [Route("All")]
+        public async Task<IActionResult> GetAllCurvePoints()
+        {
+            var list = await _curvePointService.GetAllCurvePoints();
+            return Ok(list);
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> UpdateCurvePoint(int id, [FromBody] UpdateCurvePointViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (id != model.Id)
+                return BadRequest("L'ID dans l'URL ne correspond pas à l'ID du corps de la requête.");
+
+            var updatedCp = await _curvePointService.UpdateCurvePoint(model);
+            return Ok(updatedCp);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult DeleteBid(int id)
+        public async Task<IActionResult> DeleteCurvePoint(int id)
         {
-            // TODO: Find Curve by Id and delete the Curve, return to Curve list
+            await _curvePointService.RemoveCurvePoint(id);
             return Ok();
         }
     }
