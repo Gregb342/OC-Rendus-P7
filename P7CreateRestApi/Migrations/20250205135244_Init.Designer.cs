@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace P7CreateRestApi.Migrations
 {
     [DbContext(typeof(LocalDbContext))]
-    [Migration("20250129150831_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250205135244_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -174,7 +174,7 @@ namespace P7CreateRestApi.Migrations
                             AskPrice = 1520.25,
                             AskQuantity = 200.0,
                             Benchmark = "Benchmark1",
-                            BidDate = new DateTime(2025, 1, 24, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7060),
+                            BidDate = new DateTime(2025, 1, 31, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5207),
                             BidPrice = 1500.75,
                             BidQuantity = 100.5,
                             BidSecurity = "Security1",
@@ -182,11 +182,11 @@ namespace P7CreateRestApi.Migrations
                             BidType = "Type1",
                             Book = "Book1",
                             Commentary = "Test Commentary 1",
-                            CreationDate = new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7066),
+                            CreationDate = new DateTime(2025, 2, 5, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5211),
                             CreationName = "System",
                             DealName = "Deal1",
                             DealType = "TypeA",
-                            RevisionDate = new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7066),
+                            RevisionDate = new DateTime(2025, 2, 5, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5212),
                             RevisionName = "System",
                             Side = "Buy",
                             SourceListId = "Source1",
@@ -199,7 +199,7 @@ namespace P7CreateRestApi.Migrations
                             AskPrice = 1650.5,
                             AskQuantity = 350.0,
                             Benchmark = "Benchmark2",
-                            BidDate = new DateTime(2025, 1, 26, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7068),
+                            BidDate = new DateTime(2025, 2, 2, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5214),
                             BidPrice = 1600.0,
                             BidQuantity = 300.0,
                             BidSecurity = "Security2",
@@ -207,11 +207,11 @@ namespace P7CreateRestApi.Migrations
                             BidType = "Type2",
                             Book = "Book2",
                             Commentary = "Test Commentary 2",
-                            CreationDate = new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7069),
+                            CreationDate = new DateTime(2025, 2, 5, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5215),
                             CreationName = "Admin",
                             DealName = "Deal2",
                             DealType = "TypeB",
-                            RevisionDate = new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7070),
+                            RevisionDate = new DateTime(2025, 2, 5, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5215),
                             RevisionName = "Admin",
                             Side = "Sell",
                             SourceListId = "Source2",
@@ -245,6 +245,26 @@ namespace P7CreateRestApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CurvePoints");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AsOfDate = new DateTime(2025, 1, 29, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5295),
+                            CreationDate = new DateTime(2025, 2, 5, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5295),
+                            CurveId = (byte)1,
+                            CurvePointValue = 100.25,
+                            Term = 10.5
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AsOfDate = new DateTime(2025, 1, 31, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5296),
+                            CreationDate = new DateTime(2025, 2, 5, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5297),
+                            CurveId = (byte)2,
+                            CurvePointValue = 150.5,
+                            Term = 15.75
+                        });
                 });
 
             modelBuilder.Entity("Dot.Net.WebApi.Domain.Trade", b =>

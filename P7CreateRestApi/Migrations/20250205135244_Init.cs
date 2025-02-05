@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace P7CreateRestApi.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -144,12 +144,20 @@ namespace P7CreateRestApi.Migrations
             migrationBuilder.InsertData(
                 table: "Bids",
                 columns: new[] { "BidId", "Account", "AskPrice", "AskQuantity", "Benchmark", "BidDate", "BidPrice", "BidQuantity", "BidSecurity", "BidStatus", "BidType", "Book", "Commentary", "CreationDate", "CreationName", "DealName", "DealType", "RevisionDate", "RevisionName", "Side", "SourceListId", "Trader" },
-                values: new object[] { 1, "Account1", 1520.25, 200.0, "Benchmark1", new DateTime(2025, 1, 24, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7060), 1500.75, 100.5, "Security1", "Pending", "Type1", "Book1", "Test Commentary 1", new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7066), "System", "Deal1", "TypeA", new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7066), "System", "Buy", "Source1", "Trader1" });
+                values: new object[,]
+                {
+                    { 1, "Account1", 1520.25, 200.0, "Benchmark1", new DateTime(2025, 1, 31, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5207), 1500.75, 100.5, "Security1", "Pending", "Type1", "Book1", "Test Commentary 1", new DateTime(2025, 2, 5, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5211), "System", "Deal1", "TypeA", new DateTime(2025, 2, 5, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5212), "System", "Buy", "Source1", "Trader1" },
+                    { 2, "Account2", 1650.5, 350.0, "Benchmark2", new DateTime(2025, 2, 2, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5214), 1600.0, 300.0, "Security2", "Completed", "Type2", "Book2", "Test Commentary 2", new DateTime(2025, 2, 5, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5215), "Admin", "Deal2", "TypeB", new DateTime(2025, 2, 5, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5215), "Admin", "Sell", "Source2", "Trader2" }
+                });
 
             migrationBuilder.InsertData(
-                table: "Bids",
-                columns: new[] { "BidId", "Account", "AskPrice", "AskQuantity", "Benchmark", "BidDate", "BidPrice", "BidQuantity", "BidSecurity", "BidStatus", "BidType", "Book", "Commentary", "CreationDate", "CreationName", "DealName", "DealType", "RevisionDate", "RevisionName", "Side", "SourceListId", "Trader" },
-                values: new object[] { 2, "Account2", 1650.5, 350.0, "Benchmark2", new DateTime(2025, 1, 26, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7068), 1600.0, 300.0, "Security2", "Completed", "Type2", "Book2", "Test Commentary 2", new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7069), "Admin", "Deal2", "TypeB", new DateTime(2025, 1, 29, 15, 8, 31, 597, DateTimeKind.Utc).AddTicks(7070), "Admin", "Sell", "Source2", "Trader2" });
+                table: "CurvePoints",
+                columns: new[] { "Id", "AsOfDate", "CreationDate", "CurveId", "CurvePointValue", "Term" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2025, 1, 29, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5295), new DateTime(2025, 2, 5, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5295), (byte)1, 100.25, 10.5 },
+                    { 2, new DateTime(2025, 1, 31, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5296), new DateTime(2025, 2, 5, 13, 52, 44, 707, DateTimeKind.Utc).AddTicks(5297), (byte)2, 150.5, 15.75 }
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
