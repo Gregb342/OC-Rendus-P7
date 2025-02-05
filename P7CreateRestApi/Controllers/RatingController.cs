@@ -1,5 +1,7 @@
-using Dot.Net.WebApi.Controllers.Domain;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Services.Interfaces;
+using P7CreateRestApi.ViewsModels.Ratings;
+using Dot.Net.WebApi.Controllers.Domain;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -7,52 +9,64 @@ namespace Dot.Net.WebApi.Controllers
     [Route("[controller]")]
     public class RatingController : ControllerBase
     {
-        // TODO: Inject Rating service
+        private readonly IRatingService _ratingService;
 
-        [HttpGet]
-        [Route("list")]
-        public IActionResult Home()
+        public RatingController(IRatingService ratingService)
         {
-            // TODO: find all Rating, add to model
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("add")]
-        public IActionResult AddRatingForm([FromBody]Rating rating)
-        {
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("validate")]
-        public IActionResult Validate([FromBody]Rating rating)
-        {
-            // TODO: check data valid and save to db, after saving return Rating list
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
-        {
-            // TODO: get Rating by Id and to model then show to the form
-            return Ok();
+            _ratingService = ratingService;
         }
 
         [HttpPost]
-        [Route("update/{id}")]
-        public IActionResult UpdateRating(int id, [FromBody] Rating rating)
+        [Route("")]
+        public async Task<IActionResult> AddRating([FromBody] AddRatingViewModel model)
         {
-            // TODO: check required fields, if valid call service to update Rating and return Rating list
-            return Ok();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // Mapper le ViewModel en entité
+            Rating rating = new Rating
+            {
+                MoodysRating = model.MoodysRating,
+                SandPRating = model.SandPRating,
+                FitchRating = model.FitchRating,
+                OrderNumber = model.OrderNumber
+            };
+
+            await _ratingService.AddRating(rating);
+            return Ok(rating);
         }
 
-        [HttpDelete]
-        [Route("{id}")]
-        public IActionResult DeleteRating(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRating(int id)
         {
-            // TODO: Find Rating by Id and delete the Rating, return to Rating list
+            var rating = await _ratingService.GetRatingByIdAsync(id);
+            return Ok(rating);
+        }
+
+        [HttpGet("All")]
+        public async Task<IActionResult> GetAllRatings()
+        {
+            var ratings = await _ratingService.GetAllRatings();
+            return Ok(ratings);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateRating(int id, [FromBody] UpdateRatingViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (id != model.Id)
+                return BadRequest("L'ID dans l'URL ne correspond pas à l'ID du corps de la requête.");
+
+            var updatedRating = await _ratingService.UpdateRating(model);
+            return Ok(updatedRating);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRating(int id)
+        {
+            await _ratingService.RemoveRating(id);
             return Ok();
         }
     }
