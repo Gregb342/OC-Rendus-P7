@@ -29,6 +29,8 @@ builder.Services.AddScoped<ICurvePointRepository, CurvePointRepository>();
 builder.Services.AddScoped<ICurvePointService, CurvePointService>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 builder.Services.AddScoped<IRatingService, RatingService>();
+builder.Services.AddScoped<IRuleRepository, RuleRepository>();
+builder.Services.AddScoped<IRuleService, RuleService>();
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()

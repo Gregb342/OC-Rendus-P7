@@ -1,6 +1,6 @@
-namespace Dot.Net.WebApi.Controllers
+﻿namespace P7CreateRestApi.ViewsModels.Rules
 {
-    public class RuleName
+    public class GetRuleViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
