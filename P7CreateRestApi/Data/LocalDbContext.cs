@@ -24,6 +24,7 @@ namespace Dot.Net.WebApi.Data
             #region Seed Data
             BidSeed.Seed(builder);
             CurvePointSeed.Seed(builder);
+            RatingSeed.Seed(builder);
             #endregion
         }
 
