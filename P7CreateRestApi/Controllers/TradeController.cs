@@ -1,5 +1,7 @@
-using Dot.Net.WebApi.Domain;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Services.Interfaces;
+using P7CreateRestApi.ViewsModels.Trades;
+using Dot.Net.WebApi.Domain;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -7,52 +9,80 @@ namespace Dot.Net.WebApi.Controllers
     [Route("[controller]")]
     public class TradeController : ControllerBase
     {
-        // TODO: Inject Trade service
+        private readonly ITradeService _tradeService;
 
-        [HttpGet]
-        [Route("list")]
-        public IActionResult Home()
+        public TradeController(ITradeService tradeService)
         {
-            // TODO: find all Trade, add to model
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("add")]
-        public IActionResult AddTrade([FromBody]Trade trade)
-        {
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("validate")]
-        public IActionResult Validate([FromBody]Trade trade)
-        {
-            // TODO: check data valid and save to db, after saving return Trade list
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
-        {
-            // TODO: get Trade by Id and to model then show to the form
-            return Ok();
+            _tradeService = tradeService;
         }
 
         [HttpPost]
-        [Route("update/{id}")]
-        public IActionResult UpdateTrade(int id, [FromBody] Trade trade)
+        [Route("")]
+        public async Task<IActionResult> AddTrade([FromBody] AddTradeViewModel model)
         {
-            // TODO: check required fields, if valid call service to update Trade and return Trade list
-            return Ok();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // Mapper le ViewModel en entité
+            Trade trade = new Trade
+            {
+                Account = model.Account,
+                AccountType = model.AccountType,
+                BuyQuantity = model.BuyQuantity,
+                SellQuantity = model.SellQuantity,
+                BuyPrice = model.BuyPrice,
+                SellPrice = model.SellPrice,
+                TradeDate = model.TradeDate,
+                TradeSecurity = model.TradeSecurity,
+                TradeStatus = model.TradeStatus,
+                Trader = model.Trader,
+                Benchmark = model.Benchmark,
+                Book = model.Book,
+                CreationName = model.CreationName,
+                CreationDate = model.CreationDate,
+                RevisionName = model.RevisionName,
+                RevisionDate = model.RevisionDate,
+                DealName = model.DealName,
+                DealType = model.DealType,
+                SourceListId = model.SourceListId,
+                Side = model.Side
+            };
+
+            await _tradeService.AddTrade(trade);
+            return Ok(trade);
         }
 
-        [HttpDelete]
-        [Route("{id}")]
-        public IActionResult DeleteTrade(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTrade(int id)
         {
-            // TODO: Find Trade by Id and delete the Trade, return to Trade list
+            var trade = await _tradeService.GetTradeByIdAsync(id);
+            return Ok(trade);
+        }
+
+        [HttpGet("All")]
+        public async Task<IActionResult> GetAllTrades()
+        {
+            var trades = await _tradeService.GetAllTrades();
+            return Ok(trades);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTrade(int id, [FromBody] UpdateTradeViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (id != model.TradeId)
+                return BadRequest("L'ID dans l'URL ne correspond pas à l'ID du corps de la requête.");
+
+            var updatedTrade = await _tradeService.UpdateTrade(model);
+            return Ok(updatedTrade);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTrade(int id)
+        {
+            await _tradeService.RemoveTrade(id);
             return Ok();
         }
     }
