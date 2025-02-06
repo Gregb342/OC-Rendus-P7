@@ -14,22 +14,22 @@ namespace Dot.Net.WebApi.Repositories
             DbContext = dbContext;
         }
 
-        public User FindByUserName(string userName)
+        public ApplicationUser FindByUserName(string userName)
         {
             return DbContext.Users.Where(user => user.UserName == userName)
                                   .FirstOrDefault();
         }
 
-        public async Task<List<User>> FindAll()
+        public async Task<List<ApplicationUser>> FindAll()
         {
             return await DbContext.Users.ToListAsync();
         }
 
-        public void Add(User user)
+        public void Add(ApplicationUser user)
         {
         }
 
-        public User FindById(int id)
+        public ApplicationUser FindById(int id)
         {
             return null;
         }

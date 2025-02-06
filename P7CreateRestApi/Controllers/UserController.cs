@@ -24,14 +24,14 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpGet]
         [Route("add")]
-        public IActionResult AddUser([FromBody]User user)
+        public IActionResult AddUser([FromBody]ApplicationUser user)
         {
             return Ok();
         }
 
         [HttpGet]
         [Route("validate")]
-        public IActionResult Validate([FromBody]User user)
+        public IActionResult Validate([FromBody]ApplicationUser user)
         {
             if (!ModelState.IsValid)
             {
@@ -47,7 +47,7 @@ namespace Dot.Net.WebApi.Controllers
         [Route("update/{id}")]
         public IActionResult ShowUpdateForm(int id)
         {
-            User user = _userRepository.FindById(id);
+            ApplicationUser user = _userRepository.FindById(id);
             
             if (user == null)
                 throw new ArgumentException("Invalid user Id:" + id);
@@ -57,7 +57,7 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpPost]
         [Route("update/{id}")]
-        public IActionResult UpdateUser(int id, [FromBody] User user)
+        public IActionResult UpdateUser(int id, [FromBody] ApplicationUser user)
         {
             // TODO: check required fields, if valid call service to update Trade and return Trade list
             return Ok();
@@ -67,7 +67,7 @@ namespace Dot.Net.WebApi.Controllers
         [Route("{id}")]
         public IActionResult DeleteUser(int id)
         {
-            User user = _userRepository.FindById(id);
+            ApplicationUser user = _userRepository.FindById(id);
             
             if (user == null)
                 throw new ArgumentException("Invalid user Id:" + id);
@@ -77,7 +77,7 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpGet]
         [Route("/secure/article-details")]
-        public async Task<ActionResult<List<User>>> GetAllUserArticles()
+        public async Task<ActionResult<List<ApplicationUser>>> GetAllUserArticles()
         {
             return Ok();
         }

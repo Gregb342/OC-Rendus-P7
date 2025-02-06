@@ -3,12 +3,13 @@ using Dot.Net.WebApi.Domain;
 using Dot.Net.WebApi.Controllers.Domain;
 using Dot.Net.WebApi.Controllers;
 using P7CreateRestApi.Data.Seed;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Dot.Net.WebApi.Data
 {
-    public class LocalDbContext : DbContext
+    public class LocalDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<User> Users { get; set;}
+        public DbSet<ApplicationUser> Users { get; set;}
         public DbSet<Bid> Bids { get; set;}
         public DbSet<CurvePoint> CurvePoints { get; set; }
         public DbSet<Rating> Ratings { get; set; }

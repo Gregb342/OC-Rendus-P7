@@ -6,9 +6,9 @@ namespace P7CreateRestApi.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        User FindByUserName(string userName);
-        Task<List<User>> FindAll();
-        void Add(User user);
-        User FindById(int id);
+        ApplicationUser FindByUserName(string userName);
+        Task<List<ApplicationUser>> FindAll();
+        void Add(ApplicationUser user);
+        ApplicationUser FindById(int id);
     }
 }
