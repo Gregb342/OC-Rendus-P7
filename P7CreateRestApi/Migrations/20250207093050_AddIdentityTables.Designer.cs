@@ -4,6 +4,7 @@ using Dot.Net.WebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace P7CreateRestApi.Migrations
 {
     [DbContext(typeof(LocalDbContext))]
-    partial class LocalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250207093050_AddIdentityTables")]
+    partial class AddIdentityTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -281,7 +283,7 @@ namespace P7CreateRestApi.Migrations
                             AskPrice = 1520.25,
                             AskQuantity = 200.0,
                             Benchmark = "Benchmark1",
-                            BidDate = new DateTime(2025, 2, 2, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8722),
+                            BidDate = new DateTime(2025, 2, 2, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3541),
                             BidPrice = 1500.75,
                             BidQuantity = 100.5,
                             BidSecurity = "Security1",
@@ -289,11 +291,11 @@ namespace P7CreateRestApi.Migrations
                             BidType = "Type1",
                             Book = "Book1",
                             Commentary = "Test Commentary 1",
-                            CreationDate = new DateTime(2025, 2, 7, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8729),
+                            CreationDate = new DateTime(2025, 2, 7, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3546),
                             CreationName = "System",
                             DealName = "Deal1",
                             DealType = "TypeA",
-                            RevisionDate = new DateTime(2025, 2, 7, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8730),
+                            RevisionDate = new DateTime(2025, 2, 7, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3547),
                             RevisionName = "System",
                             Side = "Buy",
                             SourceListId = "Source1",
@@ -306,7 +308,7 @@ namespace P7CreateRestApi.Migrations
                             AskPrice = 1650.5,
                             AskQuantity = 350.0,
                             Benchmark = "Benchmark2",
-                            BidDate = new DateTime(2025, 2, 4, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8734),
+                            BidDate = new DateTime(2025, 2, 4, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3548),
                             BidPrice = 1600.0,
                             BidQuantity = 300.0,
                             BidSecurity = "Security2",
@@ -314,11 +316,11 @@ namespace P7CreateRestApi.Migrations
                             BidType = "Type2",
                             Book = "Book2",
                             Commentary = "Test Commentary 2",
-                            CreationDate = new DateTime(2025, 2, 7, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8735),
+                            CreationDate = new DateTime(2025, 2, 7, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3549),
                             CreationName = "Admin",
                             DealName = "Deal2",
                             DealType = "TypeB",
-                            RevisionDate = new DateTime(2025, 2, 7, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8736),
+                            RevisionDate = new DateTime(2025, 2, 7, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3550),
                             RevisionName = "Admin",
                             Side = "Sell",
                             SourceListId = "Source2",
@@ -357,8 +359,8 @@ namespace P7CreateRestApi.Migrations
                         new
                         {
                             Id = 1,
-                            AsOfDate = new DateTime(2025, 1, 31, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8852),
-                            CreationDate = new DateTime(2025, 2, 7, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8859),
+                            AsOfDate = new DateTime(2025, 1, 31, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3638),
+                            CreationDate = new DateTime(2025, 2, 7, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3639),
                             CurveId = (byte)1,
                             CurvePointValue = 100.25,
                             Term = 10.5
@@ -366,8 +368,8 @@ namespace P7CreateRestApi.Migrations
                         new
                         {
                             Id = 2,
-                            AsOfDate = new DateTime(2025, 2, 2, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8860),
-                            CreationDate = new DateTime(2025, 2, 7, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8860),
+                            AsOfDate = new DateTime(2025, 2, 2, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3640),
+                            CreationDate = new DateTime(2025, 2, 7, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3640),
                             CurveId = (byte)2,
                             CurvePointValue = 150.5,
                             Term = 15.75
@@ -469,17 +471,17 @@ namespace P7CreateRestApi.Migrations
                             Book = "Book1",
                             BuyPrice = 1000.0,
                             BuyQuantity = 500.0,
-                            CreationDate = new DateTime(2025, 1, 28, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8936),
+                            CreationDate = new DateTime(2025, 1, 28, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3671),
                             CreationName = "System",
                             DealName = "Deal1",
                             DealType = "TypeA",
-                            RevisionDate = new DateTime(2025, 2, 2, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8936),
+                            RevisionDate = new DateTime(2025, 2, 2, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3672),
                             RevisionName = "System",
                             SellPrice = 1050.0,
                             SellQuantity = 250.0,
                             Side = "Buy",
                             SourceListId = "Source1",
-                            TradeDate = new DateTime(2025, 1, 28, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8933),
+                            TradeDate = new DateTime(2025, 1, 28, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3670),
                             TradeSecurity = "Security1",
                             TradeStatus = "Completed",
                             Trader = "Trader1"
@@ -493,17 +495,17 @@ namespace P7CreateRestApi.Migrations
                             Book = "Book2",
                             BuyPrice = 1100.0,
                             BuyQuantity = 300.0,
-                            CreationDate = new DateTime(2025, 1, 30, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8948),
+                            CreationDate = new DateTime(2025, 1, 30, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3675),
                             CreationName = "Admin",
                             DealName = "Deal2",
                             DealType = "TypeB",
-                            RevisionDate = new DateTime(2025, 2, 4, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8948),
+                            RevisionDate = new DateTime(2025, 2, 4, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3675),
                             RevisionName = "Admin",
                             SellPrice = 1150.0,
                             SellQuantity = 150.0,
                             Side = "Sell",
                             SourceListId = "Source2",
-                            TradeDate = new DateTime(2025, 1, 30, 10, 50, 59, 145, DateTimeKind.Utc).AddTicks(8941),
+                            TradeDate = new DateTime(2025, 1, 30, 9, 30, 50, 574, DateTimeKind.Utc).AddTicks(3674),
                             TradeSecurity = "Security2",
                             TradeStatus = "Pending",
                             Trader = "Trader2"

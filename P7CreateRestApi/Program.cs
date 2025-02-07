@@ -39,7 +39,7 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
-    options.RequireHttpsMetadata = false;
+    options.RequireHttpsMetadata = false; // a passer en true pour le déploiement en prod
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -74,6 +74,12 @@ builder.Host.UseSerilog();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await SeedRolesAsync(services);
+}
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -88,5 +94,64 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+async Task SeedRolesAsync(IServiceProvider serviceProvider)
+{
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    string[] roleNames = { "Admin", "User", "Manager" };
+
+    foreach (var roleName in roleNames)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+            Console.WriteLine($"Rôle créé : {roleName}");
+        }
+    }
+}
+
+async Task SeedAdminUser(IServiceProvider serviceProvider)
+{
+    using var scope = serviceProvider.CreateScope();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    string adminRole = "Admin";
+    string adminEmail = "admin@example.com";
+    string adminPassword = "Admin@123"; // À CHANGER en prod, ou utiliser des variables d'environnement !
+
+    if (!await roleManager.RoleExistsAsync(adminRole))
+    {
+        await roleManager.CreateAsync(new IdentityRole(adminRole));
+    }
+    
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+    if (adminUser == null)
+    {
+        adminUser = new ApplicationUser
+        {
+            UserName = adminEmail,
+            Email = adminEmail,
+            EmailConfirmed = true // Optionnel : confirme l'email directement
+        };
+
+        var result = await userManager.CreateAsync(adminUser, adminPassword);
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(adminUser, adminRole);
+            Console.WriteLine($" Utilisateur Admin créé : {adminEmail}");
+        }
+        else
+        {
+            Console.WriteLine($" Erreur lors de la création de l'admin : {string.Join(", ", result.Errors)}");
+        }
+    }
+    else
+    {
+        Console.WriteLine($" L'utilisateur Admin existe déjà : {adminEmail}");
+    }
+}
+
 
 app.Run();
