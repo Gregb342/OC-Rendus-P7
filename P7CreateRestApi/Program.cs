@@ -63,7 +63,9 @@ builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IRuleRepository, RuleRepository>();
 builder.Services.AddScoped<IRuleService, RuleService>();
 builder.Services.AddScoped<ITradeRepository, TradeRepository>();
-builder.Services.AddScoped<ITradeService, TradeService>();  
+builder.Services.AddScoped<ITradeService, TradeService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
