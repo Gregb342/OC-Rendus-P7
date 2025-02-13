@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using P7CreateRestApi.Models;
 using System.IdentityModel.Tokens.Jwt;
@@ -83,7 +84,7 @@ public class AuthController : ControllerBase
         return Ok($"Rôle '{model.Role}' assigné à {model.Username}");
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Admin)]
     [HttpGet("get-roles/{username}")]
     public async Task<IActionResult> GetRoles(string username)
     {
@@ -91,6 +92,50 @@ public class AuthController : ControllerBase
         if (user == null) return NotFound("Utilisateur introuvable");
 
         var roles = await _userManager.GetRolesAsync(user);
+        return Ok(roles);
+    }
+
+    [Authorize(Roles = Roles.Admin)]
+    [HttpDelete("delete-role/{username}/{role}")]
+    public async Task<IActionResult> DeleteRole(string username, string role)
+    {
+        var user = await _userManager.FindByNameAsync(username);
+        if (user is null) return NotFound("Utilisateur introuvable");
+
+        if (!await _userManager.IsInRoleAsync(user, role))
+            return BadRequest($"L'utilisateur {username} n'a pas le rôle {role}");
+
+        await _userManager.RemoveFromRoleAsync(user, role);
+
+        return Ok($"Rôle '{role}' supprimé pour {username}");
+    }
+
+    [Authorize(Roles = Roles.Admin)]
+    [HttpDelete("delete-roles/{username}")]
+    public async Task<IActionResult> DeleteRoles(string username)
+    {
+        var user = await _userManager.FindByNameAsync(username);
+        if (user is null) return NotFound("Utilisateur introuvable");
+
+        var roles = await _userManager.GetRolesAsync(user);
+
+        if (!roles.Any())
+            return BadRequest("L'utilisateur n'a aucun rôle assigné.");
+
+        foreach (var role in roles)
+        {
+            await _userManager.RemoveFromRoleAsync(user, role);
+        }
+
+        return Ok($"Tous les rôles ont été supprimés pour l'utilisateur {username}");
+    }
+
+    [Authorize(Roles = Roles.Admin)]
+    [HttpGet("get-roles")]
+    public async Task<IActionResult> GetAllRoles()
+    {
+        var roles = await _roleManager.Roles.Select(r => r.Name).ToListAsync();
+
         return Ok(roles);
     }
 
@@ -104,6 +149,4 @@ public class AuthController : ControllerBase
         }
         return Forbid(); 
     }
-
-
 }
