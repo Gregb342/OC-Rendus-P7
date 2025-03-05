@@ -15,14 +15,17 @@ public class AuthController : ControllerBase
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
+    private readonly ILogger<AuthController> _logger;
 
     public AuthController(UserManager<ApplicationUser> userManager, 
                           RoleManager<IdentityRole> roleManager,
-                          IConfiguration configuration)
+                          IConfiguration configuration,
+                          ILogger<AuthController> logger)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _configuration = configuration;
+        _logger = logger;
     }
 
     [HttpPost("register")]
@@ -33,6 +36,7 @@ public class AuthController : ControllerBase
 
         if (!result.Succeeded)
             return BadRequest(result.Errors);
+        var roles = await _userManager.AddToRoleAsync(user, "User");
 
         return Ok("Utilisateur créé avec succès !");
     }
@@ -65,8 +69,13 @@ public class AuthController : ControllerBase
             claims: authClaims,
             signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
         );
+        _logger.LogInformation($"Utilisateur {user.Id} connecté. Token généré et envoyé.");
 
-        return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+        return Ok(new 
+        { 
+            message = "Utilisateur connecté, token de connexion généré.",
+            token = new JwtSecurityTokenHandler().WriteToken(token) 
+        });
     }
 
     [Authorize(Roles = Roles.Admin)]
@@ -76,12 +85,20 @@ public class AuthController : ControllerBase
         var user = await _userManager.FindByNameAsync(model.Username);
         if (user == null) return NotFound("Utilisateur introuvable");
 
+        _logger.LogInformation($"Tentative d'attribution du rôle '{model.Role}' à l'utilisateur '{model.Username}'.");
+
         if (!await _roleManager.RoleExistsAsync(model.Role))
+        {
+            _logger.LogInformation($"Le rôle '{model.Role}' n'existe pas, création en cours.");
             await _roleManager.CreateAsync(new IdentityRole(model.Role));
+        }
 
         await _userManager.AddToRoleAsync(user, model.Role);
+        _logger.LogInformation($"Rôle '{model.Role}' assigné avec succès à {model.Username}.");
+
         return Ok($"Rôle '{model.Role}' assigné à {model.Username}");
     }
+
 
     [Authorize]
     [HttpGet("get-roles/{username}")]
@@ -93,17 +110,5 @@ public class AuthController : ControllerBase
         var roles = await _userManager.GetRolesAsync(user);
         return Ok(roles);
     }
-
-    [Authorize]
-    [HttpGet("admin-or-manager")]
-    public IActionResult AdminOrManagerEndpoint()
-    {
-        if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Manager))
-        {
-            return Ok("Tu es Admin ou Manager !");
-        }
-        return Forbid(); 
-    }
-
 
 }

@@ -19,6 +19,11 @@ namespace P7CreateRestApi.Exceptions
             try
             {
                 await _next(context);
+
+                if (context.Response.StatusCode == (int)HttpStatusCode.Forbidden)
+                {
+                    await HandleForbiddenResponseAsync(context);
+                }
             }
             catch (Exception ex)
             {
@@ -27,13 +32,29 @@ namespace P7CreateRestApi.Exceptions
                     _logger.LogWarning(ex, "Erreur de validation ou ressource non trouvée.");
                 }
                 else
-                {                   
+                {
                     _logger.LogError(ex, "Une erreur inattendue est survenue.");
                 }
 
                 await HandleExceptionAsync(context, ex);
             }
         }
+
+        private static Task HandleForbiddenResponseAsync(HttpContext context)
+        {
+            var response = new
+            {
+                statusCode = (int)HttpStatusCode.Forbidden,
+                message = "Accès refusé : vous n'avez pas les permissions nécessaires pour cette action."
+            };
+
+            context.Response.ContentType = "application/json";
+            return context.Response.WriteAsync(JsonSerializer.Serialize(response, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            }));
+        }
+
 
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
