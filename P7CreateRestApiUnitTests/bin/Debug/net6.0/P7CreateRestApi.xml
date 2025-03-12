@@ -137,5 +137,40 @@
             <param name="id">Id du rating à supprimer</param>
             <returns>Ok</returns>
         </member>
+        <member name="M:Dot.Net.WebApi.Controllers.TradeController.AddTrade(P7CreateRestApi.ViewsModels.Trades.AddTradeViewModel)">
+            <summary>
+            Ajout de Trade
+            </summary>
+            <param name="model">AddTradeViewModel</param>
+            <returns>Le DTO basé sur l'objet enregistré en base.</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.TradeController.GetTrade(System.Int32)">
+            <summary>
+            Obtenir un Trade à partir de son id
+            </summary>
+            <param name="id"></param>
+            <returns>DTO GetTradeViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.TradeController.GetAllTrades">
+            <summary>
+            Retourne tout les Trades présents en base
+            </summary>
+            <returns>Une liste de GetTradeViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.TradeController.UpdateTrade(System.Int32,P7CreateRestApi.ViewsModels.Trades.UpdateTradeViewModel)">
+            <summary>
+            Met à jour un objet Trade via DTO
+            </summary>
+            <param name="id">ID du Trade à mettre à jour</param>
+            <param name="model">DTO UpdateTradeViewModel</param>
+            <returns>GetTradeViewModel mis à jour</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.TradeController.DeleteTrade(System.Int32)">
+            <summary>
+            Supprime un Trade
+            </summary>
+            <param name="id">Id du Trade à supprimer</param>
+            <returns>Ok</returns>
+        </member>
     </members>
 </doc>

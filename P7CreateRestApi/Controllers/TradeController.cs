@@ -16,6 +16,11 @@ namespace Dot.Net.WebApi.Controllers
             _tradeService = tradeService;
         }
 
+        /// <summary>
+        /// Ajout de Trade
+        /// </summary>
+        /// <param name="model">AddTradeViewModel</param>
+        /// <returns>Le DTO basé sur l'objet enregistré en base.</returns>
         [HttpPost]
         [Route("")]
         public async Task<IActionResult> AddTrade([FromBody] AddTradeViewModel model)
@@ -49,23 +54,38 @@ namespace Dot.Net.WebApi.Controllers
             };
 
             await _tradeService.AddTrade(trade);
-            return Ok(trade);
+            return Ok(model);
         }
 
+        /// <summary>
+        /// Obtenir un Trade à partir de son id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>DTO GetTradeViewModel</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTrade(int id)
         {
-            var trade = await _tradeService.GetTradeByIdAsync(id);
+            GetTradeViewModel trade = await _tradeService.GetTradeByIdAsync(id);
             return Ok(trade);
         }
 
+        /// <summary>
+        /// Retourne tout les Trades présents en base
+        /// </summary>
+        /// <returns>Une liste de GetTradeViewModel</returns>
         [HttpGet("All")]
         public async Task<IActionResult> GetAllTrades()
         {
-            var trades = await _tradeService.GetAllTrades();
+            List<GetTradeViewModel> trades = await _tradeService.GetAllTrades();
             return Ok(trades);
         }
 
+        /// <summary>
+        /// Met à jour un objet Trade via DTO
+        /// </summary>
+        /// <param name="id">ID du Trade à mettre à jour</param>
+        /// <param name="model">DTO UpdateTradeViewModel</param>
+        /// <returns>GetTradeViewModel mis à jour</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTrade(int id, [FromBody] UpdateTradeViewModel model)
         {
@@ -75,10 +95,15 @@ namespace Dot.Net.WebApi.Controllers
             if (id != model.TradeId)
                 return BadRequest("L'ID dans l'URL ne correspond pas à l'ID du corps de la requête.");
 
-            var updatedTrade = await _tradeService.UpdateTrade(model);
+            GetTradeViewModel updatedTrade = await _tradeService.UpdateTrade(model);
             return Ok(updatedTrade);
         }
 
+        /// <summary>
+        /// Supprime un Trade
+        /// </summary>
+        /// <param name="id">Id du Trade à supprimer</param>
+        /// <returns>Ok</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTrade(int id)
         {

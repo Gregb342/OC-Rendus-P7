@@ -32,7 +32,7 @@ namespace P7CreateRestApiUnitTests.ControllerUnitTests
 
             // ASSERT
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedTrade = Assert.IsType<Trade>(okResult.Value);
+            var returnedTrade = Assert.IsType<AddTradeViewModel>(okResult.Value);
             Assert.Equal(model.Account, returnedTrade.Account);
         }
 
