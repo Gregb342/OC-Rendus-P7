@@ -137,6 +137,41 @@
             <param name="id">Id du rating à supprimer</param>
             <returns>Ok</returns>
         </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RuleController.AddRule(P7CreateRestApi.ViewsModels.Rules.AddRuleViewModel)">
+            <summary>
+            Ajout de Rule
+            </summary>
+            <param name="model">AddRuleViewModel</param>
+            <returns>Le DTO basé sur l'objet enregistré en base.</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RuleController.GetRule(System.Int32)">
+            <summary>
+            Obtenir un Rule à partir de son id
+            </summary>
+            <param name="id"></param>
+            <returns>DTO GetRuleViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RuleController.GetAllRules">
+            <summary>
+            Retourne tout les Rules présents en base
+            </summary>
+            <returns>Une liste de GetRuleViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RuleController.UpdateRule(System.Int32,P7CreateRestApi.ViewsModels.Rules.UpdateRuleViewModel)">
+            <summary>
+            Met à jour un objet Rule via DTO
+            </summary>
+            <param name="id">ID du Rule à mettre à jour</param>
+            <param name="model">DTO UpdateRuleViewModel</param>
+            <returns>GetRuleViewModel mis à jour</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RuleController.DeleteRule(System.Int32)">
+            <summary>
+            Supprime un Rule
+            </summary>
+            <param name="id">Id du Rule à supprimer</param>
+            <returns>Ok</returns>
+        </member>
         <member name="M:Dot.Net.WebApi.Controllers.TradeController.AddTrade(P7CreateRestApi.ViewsModels.Trades.AddTradeViewModel)">
             <summary>
             Ajout de Trade

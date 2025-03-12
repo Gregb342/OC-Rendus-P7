@@ -31,7 +31,7 @@ namespace P7CreateRestApiUnitTests.ControllerUnitTests
 
             // ASSERT
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedRule = Assert.IsType<Rule>(okResult.Value);
+            var returnedRule = Assert.IsType<AddRuleViewModel>(okResult.Value);
             Assert.Equal(model.Name, returnedRule.Name);
         }
 
