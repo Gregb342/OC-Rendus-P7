@@ -17,6 +17,11 @@ namespace Dot.Net.WebApi.Controllers
             _bidService = bidService;
         }
 
+        /// <summary>
+        /// Ajoute un bid
+        /// </summary>
+        /// <param name="bidViewModel">Utilise le DTo bidViewModel</param>
+        /// <returns>ok + objet concret</returns>
         [HttpPost]
         [Route("")]
         public async Task<IActionResult> AddBid([FromBody] AddBidViewModel bidViewModel)
@@ -35,9 +40,14 @@ namespace Dot.Net.WebApi.Controllers
             };
 
             await _bidService.AddBid(bid);
-            return Ok(bid);
+            return Ok(bidViewModel);
         }
 
+        /// <summary>
+        /// Obtenir un bid à partir de son id
+        /// </summary>
+        /// <param name="id">Recupere le DTO GetBidViewModel</param>
+        /// <returns>GetBidViewModel</returns>
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetBid(int id)
@@ -52,6 +62,10 @@ namespace Dot.Net.WebApi.Controllers
             return Ok(existingBid);
         }
 
+        /// <summary>
+        /// Obtenir tout les bids
+        /// </summary>
+        /// <returns>Retour une liste de GetBidViewModel</returns>
         [HttpGet]
         [Route("All")]
         public async Task<IActionResult> GetAllBids()
@@ -66,6 +80,12 @@ namespace Dot.Net.WebApi.Controllers
             return Ok(bidList);
         }
 
+        /// <summary>
+        /// Mettre à jour un bid à partir de son id
+        /// </summary>
+        /// <param name="id">id du bid</param>
+        /// <param name="bidViewModel">Utilise le dto UpdateBidViewModel</param>
+        /// <returns>Ok avec le DTO mis à jour</returns>
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdateBid(int id, [FromBody] UpdateBidViewModel bidViewModel)
@@ -85,6 +105,11 @@ namespace Dot.Net.WebApi.Controllers
             return Ok(updatedBid);
         }
 
+        /// <summary>
+        /// Supprime un bid
+        /// </summary>
+        /// <param name="id">Id du bid à supprimer</param>
+        /// <returns>Ok si c'est ok.</returns>
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteBid(int id)

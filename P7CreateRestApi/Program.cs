@@ -12,6 +12,7 @@ using P7CreateRestApi.Repositories.Interfaces;
 using P7CreateRestApi.Services;
 using P7CreateRestApi.Services.Interfaces;
 using Serilog;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Mon API", Version = "v1" });
+
+    // Définir le chemin du fichier XML de documentation
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
 
     // Ajout du support de l'authentification JWT dans Swagger
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -132,7 +138,10 @@ app.UseAuthorization();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Findexium API v1");
+    });
 }
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 

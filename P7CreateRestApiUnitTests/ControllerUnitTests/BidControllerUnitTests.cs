@@ -32,7 +32,7 @@ namespace P7CreateRestApiUnitTests.ControllerUnitTests
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedBid = Assert.IsType<Bid>(okResult.Value);
+            var returnedBid = Assert.IsType<AddBidViewModel>(okResult.Value);
             Assert.Equal("Test", returnedBid.Account);
         }
 

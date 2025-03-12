@@ -28,6 +28,11 @@ public class AuthController : ControllerBase
         _logger = logger;
     }
 
+    /// <summary>
+    /// Enregistrement d'un nouveau compte utilisateur
+    /// </summary>
+    /// <param name="model">Modele d'enregistrement utilisateur</param>
+    /// <returns>IActionResult</returns>
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterModel model)
     {
@@ -41,6 +46,11 @@ public class AuthController : ControllerBase
         return Ok("Utilisateur créé avec succès !");
     }
 
+    /// <summary>
+    /// Connexion de l'utilisateur
+    /// </summary>
+    /// <param name="model">Modele de login</param>
+    /// <returns>Message de confirmation + token jwt</returns>
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
@@ -78,6 +88,11 @@ public class AuthController : ControllerBase
         });
     }
 
+    /// <summary>
+    /// Permet à un admin d'assigner un role à un utilisateur
+    /// </summary>
+    /// <param name="model">Modele d'assignation des roles</param>
+    /// <returns>Message de confirmation</returns>
     [Authorize(Roles = Roles.Admin)]
     [HttpPost("assign-role")]
     public async Task<IActionResult> AssignRole([FromBody] AssignRoleModel model)
@@ -99,7 +114,11 @@ public class AuthController : ControllerBase
         return Ok($"Rôle '{model.Role}' assigné à {model.Username}");
     }
 
-
+    /// <summary>
+    /// Obtenir les roles à partir d'un nom d'utilisateur
+    /// </summary>
+    /// <param name="username">Nom d'utilisateur exact</param>
+    /// <returns>Tableau de roles.</returns>
     [Authorize]
     [HttpGet("get-roles/{username}")]
     public async Task<IActionResult> GetRoles(string username)

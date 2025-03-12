@@ -10,5 +10,6 @@ namespace P7CreateRestApi.ViewsModels.Bids
         public string Account { get; set; }
         public string BidType { get; set; }
         public double? BidQuantity { get; set; }
+        public string Commentary { get; set; }
     }
 }

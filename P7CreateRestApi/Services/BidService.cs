@@ -63,6 +63,7 @@ namespace P7CreateRestApi.Services
             existingBid.Account = newBid.Account;
             existingBid.BidType = newBid.BidType;
             existingBid.BidQuantity = newBid.BidQuantity;
+            existingBid.Commentary = newBid.Commentary;
 
             await _bidRepository.UpdateAsync(existingBid);
 
@@ -72,6 +73,7 @@ namespace P7CreateRestApi.Services
             getBidViewModel.Account = existingBid.Account;
             getBidViewModel.BidQuantity = existingBid.BidQuantity;
             getBidViewModel.BidType = existingBid.BidType;
+            getBidViewModel.Commentary = existingBid.Commentary;
 
             return getBidViewModel;
         }
