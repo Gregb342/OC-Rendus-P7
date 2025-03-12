@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dot.Net.WebApi.Controllers;
+using Dot.Net.WebApi.Domain;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels.Trades;
-using Dot.Net.WebApi.Controllers;
-using Dot.Net.WebApi.Domain;
 
 namespace P7CreateRestApiUnitTests.ControllerUnitTests
 {
@@ -32,7 +32,7 @@ namespace P7CreateRestApiUnitTests.ControllerUnitTests
 
             // ASSERT
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedTrade = Assert.IsType<Trade>(okResult.Value);
+            var returnedTrade = Assert.IsType<AddTradeViewModel>(okResult.Value);
             Assert.Equal(model.Account, returnedTrade.Account);
         }
 

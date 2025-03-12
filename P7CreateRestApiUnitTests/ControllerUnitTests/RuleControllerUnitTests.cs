@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dot.Net.WebApi.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels.Rules;
-using Dot.Net.WebApi.Controllers;
 
 namespace P7CreateRestApiUnitTests.ControllerUnitTests
 {
@@ -31,7 +31,7 @@ namespace P7CreateRestApiUnitTests.ControllerUnitTests
 
             // ASSERT
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedRule = Assert.IsType<Rule>(okResult.Value);
+            var returnedRule = Assert.IsType<AddRuleViewModel>(okResult.Value);
             Assert.Equal(model.Name, returnedRule.Name);
         }
 

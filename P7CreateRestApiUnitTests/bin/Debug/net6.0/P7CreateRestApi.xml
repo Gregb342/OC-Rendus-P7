@@ -1,0 +1,248 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>P7CreateRestApi</name>
+    </assembly>
+    <members>
+        <member name="M:AuthController.Register(P7CreateRestApi.Models.RegisterModel)">
+            <summary>
+            Enregistrement d'un nouveau compte utilisateur
+            </summary>
+            <param name="model">Modele d'enregistrement utilisateur</param>
+            <returns>IActionResult</returns>
+        </member>
+        <member name="M:AuthController.Login(P7CreateRestApi.Models.LoginModel)">
+            <summary>
+            Connexion de l'utilisateur
+            </summary>
+            <param name="model">Modele de login</param>
+            <returns>Message de confirmation + token jwt</returns>
+        </member>
+        <member name="M:AuthController.AssignRole(P7CreateRestApi.Models.AssignRoleModel)">
+            <summary>
+            Permet à un admin d'assigner un role à un utilisateur
+            </summary>
+            <param name="model">Modele d'assignation des roles</param>
+            <returns>Message de confirmation</returns>
+        </member>
+        <member name="M:AuthController.GetRoles(System.String)">
+            <summary>
+            Obtenir les roles à partir d'un nom d'utilisateur
+            </summary>
+            <param name="username">Nom d'utilisateur exact</param>
+            <returns>Tableau de roles.</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.BidController.AddBid(P7CreateRestApi.ViewsModels.Bids.AddBidViewModel)">
+            <summary>
+            Ajoute un bid
+            </summary>
+            <param name="bidViewModel">Utilise le DTo bidViewModel</param>
+            <returns>ok + objet concret</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.BidController.GetBid(System.Int32)">
+            <summary>
+            Obtenir un bid à partir de son id
+            </summary>
+            <param name="id">Recupere le DTO GetBidViewModel</param>
+            <returns>GetBidViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.BidController.GetAllBids">
+            <summary>
+            Obtenir tout les bids
+            </summary>
+            <returns>Retour une liste de GetBidViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.BidController.UpdateBid(System.Int32,P7CreateRestApi.ViewsModels.UpdateBidViewModel)">
+            <summary>
+            Mettre à jour un bid à partir de son id
+            </summary>
+            <param name="id">id du bid</param>
+            <param name="bidViewModel">Utilise le dto UpdateBidViewModel</param>
+            <returns>Ok avec le DTO mis à jour</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.BidController.DeleteBid(System.Int32)">
+            <summary>
+            Supprime un bid
+            </summary>
+            <param name="id">Id du bid à supprimer</param>
+            <returns>Ok si c'est ok.</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.CurvePointController.AddCurvePoint(P7CreateRestApi.ViewsModels.CurvePoints.AddCurvePointViewModel)">
+            <summary>
+            Ajout de CurvePoint
+            </summary>
+            <param name="model">AddCurvePointViewModel</param>
+            <returns>Le DTO basé sur l'objet enregistré en base.</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.CurvePointController.GetCurvePoint(System.Int32)">
+            <summary>
+            Obtenir un curvepoint à partir de son id
+            </summary>
+            <param name="id"></param>
+            <returns>DTO GetCurvePointViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.CurvePointController.GetAllCurvePoints">
+            <summary>
+            Retourne tout les CurvePoint présents en base
+            </summary>
+            <returns>Une liste de GetCurvePointViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.CurvePointController.UpdateCurvePoint(System.Int32,P7CreateRestApi.ViewsModels.CurvePoints.UpdateCurvePointViewModel)">
+            <summary>
+            Met à jour un objet CurvePoint via DTO
+            </summary>
+            <param name="id">ID du Curvepoint à mettre à jour</param>
+            <param name="model">DTO UpdateCurvePointViewModel</param>
+            <returns>GetCurvePointViewModel mis à jour</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.CurvePointController.DeleteCurvePoint(System.Int32)">
+            <summary>
+            Supprime un curvepoint
+            </summary>
+            <param name="id">Id du curvepoint à supprimer</param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RatingController.AddRating(P7CreateRestApi.ViewsModels.Ratings.AddRatingViewModel)">
+            <summary>
+            Ajout de Rating
+            </summary>
+            <param name="model">AddRatingViewModel</param>
+            <returns>Le DTO basé sur l'objet enregistré en base.</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RatingController.GetRating(System.Int32)">
+            <summary>
+            Obtenir un rating à partir de son id
+            </summary>
+            <param name="id"></param>
+            <returns>DTO GetRatingViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RatingController.GetAllRatings">
+            <summary>
+            Retourne tout les Rating présents en base
+            </summary>
+            <returns>Une liste de GetRatingViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RatingController.UpdateRating(System.Int32,P7CreateRestApi.ViewsModels.Ratings.UpdateRatingViewModel)">
+            <summary>
+            Met à jour un objet Rating via DTO
+            </summary>
+            <param name="id">ID du Rating à mettre à jour</param>
+            <param name="model">DTO UpdateCurvePointViewModel</param>
+            <returns>GetRatingViewModel mis à jour</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RatingController.DeleteRating(System.Int32)">
+            <summary>
+            Supprime un rating
+            </summary>
+            <param name="id">Id du rating à supprimer</param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RuleController.AddRule(P7CreateRestApi.ViewsModels.Rules.AddRuleViewModel)">
+            <summary>
+            Ajout de Rule
+            </summary>
+            <param name="model">AddRuleViewModel</param>
+            <returns>Le DTO basé sur l'objet enregistré en base.</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RuleController.GetRule(System.Int32)">
+            <summary>
+            Obtenir un Rule à partir de son id
+            </summary>
+            <param name="id"></param>
+            <returns>DTO GetRuleViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RuleController.GetAllRules">
+            <summary>
+            Retourne tout les Rules présents en base
+            </summary>
+            <returns>Une liste de GetRuleViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RuleController.UpdateRule(System.Int32,P7CreateRestApi.ViewsModels.Rules.UpdateRuleViewModel)">
+            <summary>
+            Met à jour un objet Rule via DTO
+            </summary>
+            <param name="id">ID du Rule à mettre à jour</param>
+            <param name="model">DTO UpdateRuleViewModel</param>
+            <returns>GetRuleViewModel mis à jour</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RuleController.DeleteRule(System.Int32)">
+            <summary>
+            Supprime un Rule
+            </summary>
+            <param name="id">Id du Rule à supprimer</param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.TradeController.AddTrade(P7CreateRestApi.ViewsModels.Trades.AddTradeViewModel)">
+            <summary>
+            Ajout de Trade
+            </summary>
+            <param name="model">AddTradeViewModel</param>
+            <returns>Le DTO basé sur l'objet enregistré en base.</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.TradeController.GetTrade(System.Int32)">
+            <summary>
+            Obtenir un Trade à partir de son id
+            </summary>
+            <param name="id"></param>
+            <returns>DTO GetTradeViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.TradeController.GetAllTrades">
+            <summary>
+            Retourne tout les Trades présents en base
+            </summary>
+            <returns>Une liste de GetTradeViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.TradeController.UpdateTrade(System.Int32,P7CreateRestApi.ViewsModels.Trades.UpdateTradeViewModel)">
+            <summary>
+            Met à jour un objet Trade via DTO
+            </summary>
+            <param name="id">ID du Trade à mettre à jour</param>
+            <param name="model">DTO UpdateTradeViewModel</param>
+            <returns>GetTradeViewModel mis à jour</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.TradeController.DeleteTrade(System.Int32)">
+            <summary>
+            Supprime un Trade
+            </summary>
+            <param name="id">Id du Trade à supprimer</param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:UserController.GetAllUsers">
+            <summary>
+            Obtenir la liste de tout les utilisateurs
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UserController.GetUserById(System.String)">
+            <summary>
+            Obtenir un utilisateur à partir de son ID
+            </summary>
+            <param name="id">Id de l'utilisateur</param>
+            <returns>Applicationuser</returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:UserController.CreateUser(Dot.Net.WebApi.Domain.ApplicationUser)">
+            <summary>
+            Créer un utilisateur
+            </summary>
+            <param name="user">ApplicationUser</param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:UserController.UpdateUser(System.String,Dot.Net.WebApi.Domain.ApplicationUser)">
+            <summary>
+            Mettre à jour un utilisateur
+            </summary>
+            <param name="id">Id de l'utilisateur</param>
+            <param name="user">ApplicationUser</param>
+            <returns>Utilisateur mis à jour</returns>
+        </member>
+        <member name="M:UserController.DeleteUser(Dot.Net.WebApi.Domain.ApplicationUser)">
+            <summary>
+            Supprimer un utilisateur
+            </summary>
+            <param name="user">Application User</param>
+            <returns>Ok</returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+    </members>
+</doc>

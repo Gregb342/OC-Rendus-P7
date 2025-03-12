@@ -1,6 +1,5 @@
 ﻿using Dot.Net.WebApi.Controllers.Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace P7CreateRestApi.Data.Seed
 {

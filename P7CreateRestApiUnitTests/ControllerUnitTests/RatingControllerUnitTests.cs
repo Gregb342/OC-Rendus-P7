@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dot.Net.WebApi.Controllers;
+using Dot.Net.WebApi.Controllers.Domain;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels.Ratings;
-using Dot.Net.WebApi.Controllers;
-using Dot.Net.WebApi.Controllers.Domain;
 
 namespace P7CreateRestApiUnitTests.ControllerUnitTests
 {
@@ -32,7 +32,7 @@ namespace P7CreateRestApiUnitTests.ControllerUnitTests
 
             // ASSERT
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedRating = Assert.IsType<Rating>(okResult.Value);
+            var returnedRating = Assert.IsType<AddRatingViewModel>(okResult.Value);
             Assert.Equal(model.OrderNumber, returnedRating.OrderNumber);
         }
 

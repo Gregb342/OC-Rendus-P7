@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace P7CreateRestApi.ViewsModels.Trades
+﻿namespace P7CreateRestApi.ViewsModels.Trades
 {
     public class GetTradeViewModel
     {

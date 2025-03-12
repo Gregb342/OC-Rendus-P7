@@ -1,13 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Moq;
-using Xunit;
-using P7CreateRestApi.Services;
-using P7CreateRestApi.Repositories.Interfaces;
-using P7CreateRestApi.ViewsModels.Bids;
 using Dot.Net.WebApi.Domain;
-using System;
+using P7CreateRestApi.Repositories.Interfaces;
+using P7CreateRestApi.Services;
 using P7CreateRestApi.ViewsModels;
 
 namespace P7CreateRestApiUnitTests.ServiceUnitTests

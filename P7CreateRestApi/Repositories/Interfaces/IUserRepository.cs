@@ -1,14 +1,9 @@
-﻿using Dot.Net.WebApi.Data;
-using Dot.Net.WebApi.Domain;
-using Microsoft.EntityFrameworkCore;
+﻿using Dot.Net.WebApi.Domain;
 
 namespace P7CreateRestApi.Repositories.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserRepository : IGenericRepository<ApplicationUser>
     {
-        User FindByUserName(string userName);
-        Task<List<User>> FindAll();
-        void Add(User user);
-        User FindById(int id);
     }
+
 }

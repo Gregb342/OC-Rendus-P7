@@ -55,7 +55,7 @@ namespace P7CreateRestApi.Services
             var cp = await _curvePointRepository.GetByIdAsync(model.Id)
                      ?? throw new KeyNotFoundException($"Le CurvePoint avec l'ID {model.Id} n'existe pas.");
 
-            
+
             cp.CurveId = model.CurveId;
             cp.AsOfDate = model.AsOfDate;
             cp.Term = model.Term;

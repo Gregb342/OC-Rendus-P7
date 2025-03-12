@@ -127,6 +127,74 @@ namespace P7CreateRestApi.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Dot.Net.WebApi.Domain.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Fullname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
             modelBuilder.Entity("Dot.Net.WebApi.Domain.Bid", b =>
                 {
                     b.Property<int>("BidId")
@@ -212,7 +280,7 @@ namespace P7CreateRestApi.Migrations
                             AskPrice = 1520.25,
                             AskQuantity = 200.0,
                             Benchmark = "Benchmark1",
-                            BidDate = new DateTime(2025, 1, 31, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9509),
+                            BidDate = new DateTime(2025, 2, 28, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6679),
                             BidPrice = 1500.75,
                             BidQuantity = 100.5,
                             BidSecurity = "Security1",
@@ -220,11 +288,11 @@ namespace P7CreateRestApi.Migrations
                             BidType = "Type1",
                             Book = "Book1",
                             Commentary = "Test Commentary 1",
-                            CreationDate = new DateTime(2025, 2, 5, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9514),
+                            CreationDate = new DateTime(2025, 3, 5, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6683),
                             CreationName = "System",
                             DealName = "Deal1",
                             DealType = "TypeA",
-                            RevisionDate = new DateTime(2025, 2, 5, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9515),
+                            RevisionDate = new DateTime(2025, 3, 5, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6684),
                             RevisionName = "System",
                             Side = "Buy",
                             SourceListId = "Source1",
@@ -237,7 +305,7 @@ namespace P7CreateRestApi.Migrations
                             AskPrice = 1650.5,
                             AskQuantity = 350.0,
                             Benchmark = "Benchmark2",
-                            BidDate = new DateTime(2025, 2, 2, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9516),
+                            BidDate = new DateTime(2025, 3, 2, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6686),
                             BidPrice = 1600.0,
                             BidQuantity = 300.0,
                             BidSecurity = "Security2",
@@ -245,11 +313,11 @@ namespace P7CreateRestApi.Migrations
                             BidType = "Type2",
                             Book = "Book2",
                             Commentary = "Test Commentary 2",
-                            CreationDate = new DateTime(2025, 2, 5, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9517),
+                            CreationDate = new DateTime(2025, 3, 5, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6687),
                             CreationName = "Admin",
                             DealName = "Deal2",
                             DealType = "TypeB",
-                            RevisionDate = new DateTime(2025, 2, 5, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9518),
+                            RevisionDate = new DateTime(2025, 3, 5, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6687),
                             RevisionName = "Admin",
                             Side = "Sell",
                             SourceListId = "Source2",
@@ -288,8 +356,8 @@ namespace P7CreateRestApi.Migrations
                         new
                         {
                             Id = 1,
-                            AsOfDate = new DateTime(2025, 1, 29, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9613),
-                            CreationDate = new DateTime(2025, 2, 5, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9614),
+                            AsOfDate = new DateTime(2025, 2, 26, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6779),
+                            CreationDate = new DateTime(2025, 3, 5, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6781),
                             CurveId = (byte)1,
                             CurvePointValue = 100.25,
                             Term = 10.5
@@ -297,8 +365,8 @@ namespace P7CreateRestApi.Migrations
                         new
                         {
                             Id = 2,
-                            AsOfDate = new DateTime(2025, 1, 31, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9615),
-                            CreationDate = new DateTime(2025, 2, 5, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9616),
+                            AsOfDate = new DateTime(2025, 2, 28, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6782),
+                            CreationDate = new DateTime(2025, 3, 5, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6782),
                             CurveId = (byte)2,
                             CurvePointValue = 150.5,
                             Term = 15.75
@@ -400,17 +468,17 @@ namespace P7CreateRestApi.Migrations
                             Book = "Book1",
                             BuyPrice = 1000.0,
                             BuyQuantity = 500.0,
-                            CreationDate = new DateTime(2025, 1, 26, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9652),
+                            CreationDate = new DateTime(2025, 2, 23, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6825),
                             CreationName = "System",
                             DealName = "Deal1",
                             DealType = "TypeA",
-                            RevisionDate = new DateTime(2025, 1, 31, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9653),
+                            RevisionDate = new DateTime(2025, 2, 28, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6826),
                             RevisionName = "System",
                             SellPrice = 1050.0,
                             SellQuantity = 250.0,
                             Side = "Buy",
                             SourceListId = "Source1",
-                            TradeDate = new DateTime(2025, 1, 26, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9651),
+                            TradeDate = new DateTime(2025, 2, 23, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6823),
                             TradeSecurity = "Security1",
                             TradeStatus = "Completed",
                             Trader = "Trader1"
@@ -424,24 +492,51 @@ namespace P7CreateRestApi.Migrations
                             Book = "Book2",
                             BuyPrice = 1100.0,
                             BuyQuantity = 300.0,
-                            CreationDate = new DateTime(2025, 1, 28, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9657),
+                            CreationDate = new DateTime(2025, 2, 25, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6862),
                             CreationName = "Admin",
                             DealName = "Deal2",
                             DealType = "TypeB",
-                            RevisionDate = new DateTime(2025, 2, 2, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9657),
+                            RevisionDate = new DateTime(2025, 3, 2, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6862),
                             RevisionName = "Admin",
                             SellPrice = 1150.0,
                             SellQuantity = 150.0,
                             Side = "Sell",
                             SourceListId = "Source2",
-                            TradeDate = new DateTime(2025, 1, 28, 15, 17, 48, 338, DateTimeKind.Utc).AddTicks(9656),
+                            TradeDate = new DateTime(2025, 2, 25, 10, 16, 17, 420, DateTimeKind.Utc).AddTicks(6860),
                             TradeSecurity = "Security2",
                             TradeStatus = "Pending",
                             Trader = "Trader2"
                         });
                 });
 
-            modelBuilder.Entity("Dot.Net.WebApi.Domain.User", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -449,25 +544,153 @@ namespace P7CreateRestApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Fullname")
-                        .IsRequired()
+                    b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
+                    b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
+                    b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Dot.Net.WebApi.Domain.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Dot.Net.WebApi.Domain.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Dot.Net.WebApi.Domain.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Dot.Net.WebApi.Domain.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
