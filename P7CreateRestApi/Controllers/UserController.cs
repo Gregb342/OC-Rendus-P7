@@ -16,13 +16,25 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
+    /// <summary>
+    /// Obtenir la liste de tout les utilisateurs
+    /// </summary>
+    /// <returns></returns>
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetAllUsers()
     {
-        var users = await _userService.GetAllUsersAsync();
+        List<ApplicationUser> users = (List<ApplicationUser>) await _userService.GetAllUsersAsync();
         return Ok(users);
     }
 
+    /// <summary>
+    /// Obtenir un utilisateur à partir de son ID
+    /// </summary>
+    /// <param name="id">Id de l'utilisateur</param>
+    /// <returns>Applicationuser</returns>
+    /// <exception cref="ArgumentException"></exception>
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserById(string id)
     {
@@ -31,11 +43,16 @@ public class UserController : ControllerBase
             throw new ArgumentException($"L'ID utilisateur '{id}' n'est pas un entier valide.");
         }
 
-        var user = await _userService.GetUserByIdAsync(userId);
-        if (user == null) return NotFound("Utilisateur introuvable");
+        ApplicationUser user = await _userService.GetUserByIdAsync(userId);
+        if (user is null) return NotFound("Utilisateur introuvable");
         return Ok(user);
     }
 
+    /// <summary>
+    /// Créer un utilisateur
+    /// </summary>
+    /// <param name="user">ApplicationUser</param>
+    /// <returns>Ok</returns>
     [Authorize(Roles = "Admin, Manager")]
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] ApplicationUser user)
@@ -44,6 +61,12 @@ public class UserController : ControllerBase
         return Ok("Utilisateur créé avec succès");
     }
 
+    /// <summary>
+    /// Mettre à jour un utilisateur
+    /// </summary>
+    /// <param name="id">Id de l'utilisateur</param>
+    /// <param name="user">ApplicationUser</param>
+    /// <returns>Utilisateur mis à jour</returns>
     [Authorize(Roles = "Admin, Manager")]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUser(string id, [FromBody] ApplicationUser user)
@@ -53,7 +76,13 @@ public class UserController : ControllerBase
         return Ok(updatedUser);
     }
 
-
+    /// <summary>
+    /// Supprimer un utilisateur
+    /// </summary>
+    /// <param name="user">Application User</param>
+    /// <returns>Ok</returns>
+    /// <exception cref="ArgumentException"></exception>
+    [Authorize(Roles = "Admin, Manager")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUser(ApplicationUser user)
     {

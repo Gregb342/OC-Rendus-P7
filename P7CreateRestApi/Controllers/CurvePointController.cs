@@ -1,4 +1,5 @@
 using Dot.Net.WebApi.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels.CurvePoints;
@@ -21,6 +22,7 @@ namespace Dot.Net.WebApi.Controllers
         /// </summary>
         /// <param name="model">AddCurvePointViewModel</param>
         /// <returns>Le DTO basé sur l'objet enregistré en base.</returns>
+        [Authorize]
         [HttpPost]
         [Route("")]
         public async Task<IActionResult> AddCurvePoint([FromBody] AddCurvePointViewModel model)
@@ -46,6 +48,7 @@ namespace Dot.Net.WebApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>DTO GetCurvePointViewModel</returns>
+        [Authorize]
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetCurvePoint(int id)
@@ -58,6 +61,7 @@ namespace Dot.Net.WebApi.Controllers
         /// Retourne tout les CurvePoint présents en base
         /// </summary>
         /// <returns>Une liste de GetCurvePointViewModel</returns>
+        [Authorize]
         [HttpGet]
         [Route("All")]
         public async Task<IActionResult> GetAllCurvePoints()
@@ -72,6 +76,7 @@ namespace Dot.Net.WebApi.Controllers
         /// <param name="id">ID du Curvepoint à mettre à jour</param>
         /// <param name="model">DTO UpdateCurvePointViewModel</param>
         /// <returns>GetCurvePointViewModel mis à jour</returns>
+        [Authorize]
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdateCurvePoint(int id, [FromBody] UpdateCurvePointViewModel model)
@@ -91,6 +96,7 @@ namespace Dot.Net.WebApi.Controllers
         /// </summary>
         /// <param name="id">Id du curvepoint à supprimer</param>
         /// <returns>Ok</returns>
+        [Authorize]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteCurvePoint(int id)

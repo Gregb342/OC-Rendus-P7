@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels.Rules;
@@ -20,6 +21,7 @@ namespace Dot.Net.WebApi.Controllers
         /// </summary>
         /// <param name="model">AddRuleViewModel</param>
         /// <returns>Le DTO basé sur l'objet enregistré en base.</returns>
+        [Authorize]
         [HttpPost]
         [Route("")]
         public async Task<IActionResult> AddRule([FromBody] AddRuleViewModel model)
@@ -47,6 +49,7 @@ namespace Dot.Net.WebApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>DTO GetRuleViewModel</returns>
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRule(int id)
         {
@@ -58,6 +61,7 @@ namespace Dot.Net.WebApi.Controllers
         /// Retourne tout les Rules présents en base
         /// </summary>
         /// <returns>Une liste de GetRuleViewModel</returns>
+        [Authorize]
         [HttpGet("All")]
         public async Task<IActionResult> GetAllRules()
         {
@@ -71,6 +75,7 @@ namespace Dot.Net.WebApi.Controllers
         /// <param name="id">ID du Rule à mettre à jour</param>
         /// <param name="model">DTO UpdateRuleViewModel</param>
         /// <returns>GetRuleViewModel mis à jour</returns>
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateRule(int id, [FromBody] UpdateRuleViewModel model)
         {
@@ -89,6 +94,7 @@ namespace Dot.Net.WebApi.Controllers
         /// </summary>
         /// <param name="id">Id du Rule à supprimer</param>
         /// <returns>Ok</returns>
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRule(int id)
         {

@@ -1,4 +1,5 @@
 using Dot.Net.WebApi.Controllers.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels.Ratings;
@@ -21,6 +22,7 @@ namespace Dot.Net.WebApi.Controllers
         /// </summary>
         /// <param name="model">AddRatingViewModel</param>
         /// <returns>Le DTO basé sur l'objet enregistré en base.</returns>
+        [Authorize]
         [HttpPost]
         [Route("")]
         public async Task<IActionResult> AddRating([FromBody] AddRatingViewModel model)
@@ -45,6 +47,7 @@ namespace Dot.Net.WebApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>DTO GetRatingViewModel</returns>
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRating(int id)
         {
@@ -56,6 +59,7 @@ namespace Dot.Net.WebApi.Controllers
         /// Retourne tout les Rating présents en base
         /// </summary>
         /// <returns>Une liste de GetRatingViewModel</returns>
+        [Authorize]
         [HttpGet("All")]
         public async Task<IActionResult> GetAllRatings()
         {
@@ -69,6 +73,7 @@ namespace Dot.Net.WebApi.Controllers
         /// <param name="id">ID du Rating à mettre à jour</param>
         /// <param name="model">DTO UpdateCurvePointViewModel</param>
         /// <returns>GetRatingViewModel mis à jour</returns>
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateRating(int id, [FromBody] UpdateRatingViewModel model)
         {
@@ -87,6 +92,7 @@ namespace Dot.Net.WebApi.Controllers
         /// </summary>
         /// <param name="id">Id du rating à supprimer</param>
         /// <returns>Ok</returns>
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRating(int id)
         {

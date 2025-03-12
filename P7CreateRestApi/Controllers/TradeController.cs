@@ -1,4 +1,5 @@
 using Dot.Net.WebApi.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels.Trades;
@@ -21,6 +22,7 @@ namespace Dot.Net.WebApi.Controllers
         /// </summary>
         /// <param name="model">AddTradeViewModel</param>
         /// <returns>Le DTO basé sur l'objet enregistré en base.</returns>
+        [Authorize]
         [HttpPost]
         [Route("")]
         public async Task<IActionResult> AddTrade([FromBody] AddTradeViewModel model)
@@ -62,6 +64,7 @@ namespace Dot.Net.WebApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>DTO GetTradeViewModel</returns>
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTrade(int id)
         {
@@ -73,6 +76,7 @@ namespace Dot.Net.WebApi.Controllers
         /// Retourne tout les Trades présents en base
         /// </summary>
         /// <returns>Une liste de GetTradeViewModel</returns>
+        [Authorize]
         [HttpGet("All")]
         public async Task<IActionResult> GetAllTrades()
         {
@@ -86,6 +90,7 @@ namespace Dot.Net.WebApi.Controllers
         /// <param name="id">ID du Trade à mettre à jour</param>
         /// <param name="model">DTO UpdateTradeViewModel</param>
         /// <returns>GetTradeViewModel mis à jour</returns>
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTrade(int id, [FromBody] UpdateTradeViewModel model)
         {
@@ -104,6 +109,7 @@ namespace Dot.Net.WebApi.Controllers
         /// </summary>
         /// <param name="id">Id du Trade à supprimer</param>
         /// <returns>Ok</returns>
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTrade(int id)
         {
