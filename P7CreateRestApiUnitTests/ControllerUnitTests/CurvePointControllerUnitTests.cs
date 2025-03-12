@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dot.Net.WebApi.Controllers;
+using Dot.Net.WebApi.Domain;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels.CurvePoints;
-using Dot.Net.WebApi.Domain;
-using Dot.Net.WebApi.Controllers;
 
 namespace P7CreateRestApiUnitTests.ControllerUnitTests
 {
@@ -21,10 +21,13 @@ namespace P7CreateRestApiUnitTests.ControllerUnitTests
         [Fact]
         public async Task AddCurvePoint_ValidModel_ReturnsOk()
         {
+            // ARRANGE
             var model = new AddCurvePointViewModel { CurveId = 1, AsOfDate = DateTime.UtcNow, Term = 5, CurvePointValue = 100 };
 
+            // ACT
             var result = await _controller.AddCurvePoint(model);
 
+            // ASSERT
             var okResult = Assert.IsType<OkObjectResult>(result);
             var returnedCurvePoint = Assert.IsType<CurvePoint>(okResult.Value);
             Assert.Equal(model.CurveId, returnedCurvePoint.CurveId);
@@ -33,18 +36,21 @@ namespace P7CreateRestApiUnitTests.ControllerUnitTests
         [Fact]
         public async Task AddCurvePoint_InvalidModel_ReturnsBadRequest()
         {
+            // ARRANGE
             _controller.ModelState.AddModelError("CurveId", "Required");
             var model = new AddCurvePointViewModel();
 
+            // ACT
             var result = await _controller.AddCurvePoint(model);
 
+            // ASSERT
             Assert.IsType<BadRequestObjectResult>(result);
         }
 
         [Fact]
         public async Task GetCurvePoint_ExistingId_ReturnsOk()
         {
-            // Arrange
+            // ARRANGE
             var cp = new GetCurvePointViewModel
             {
                 CurveId = 1,
@@ -54,12 +60,12 @@ namespace P7CreateRestApiUnitTests.ControllerUnitTests
             };
             _mockService.Setup(s => s.GetCurvePointByIdAsync(1)).ReturnsAsync(cp);
 
-            // Act
+            // ACT
             var result = await _controller.GetCurvePoint(1);
 
-            // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result); 
-            var returnedCurvePoint = Assert.IsType<GetCurvePointViewModel>(okResult.Value); 
+            // ASSERT
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedCurvePoint = Assert.IsType<GetCurvePointViewModel>(okResult.Value);
             Assert.Equal(cp.Id, returnedCurvePoint.Id);
             Assert.Equal(cp.CurveId, returnedCurvePoint.CurveId);
         }
@@ -68,11 +74,14 @@ namespace P7CreateRestApiUnitTests.ControllerUnitTests
         [Fact]
         public async Task GetAllCurvePoints_ReturnsOk()
         {
+            // ARRANGE
             var list = new List<GetCurvePointViewModel> { new GetCurvePointViewModel { CurveId = 1 }, new GetCurvePointViewModel { CurveId = 2 } };
             _mockService.Setup(s => s.GetAllCurvePoints()).ReturnsAsync(list);
 
+            // ACT
             var result = await _controller.GetAllCurvePoints();
 
+            // ASSERT
             var okResult = Assert.IsType<OkObjectResult>(result);
             var returnedList = Assert.IsType<List<GetCurvePointViewModel>>(okResult.Value);
             Assert.Equal(2, returnedList.Count);
@@ -81,12 +90,15 @@ namespace P7CreateRestApiUnitTests.ControllerUnitTests
         [Fact]
         public async Task UpdateCurvePoint_ValidModel_ReturnsOk()
         {
+            // ARRANGE
             var model = new UpdateCurvePointViewModel { Id = 1, CurveId = 2, Term = 10, CurvePointValue = 200 };
             var updatedCp = new GetCurvePointViewModel { CurveId = 2, Term = 10, CurvePointValue = 200 };
             _mockService.Setup(s => s.UpdateCurvePoint(model)).ReturnsAsync(updatedCp);
 
+            // ACT
             var result = await _controller.UpdateCurvePoint(1, model);
 
+            // ASSERT
             var okResult = Assert.IsType<OkObjectResult>(result);
             var returnedCp = Assert.IsType<GetCurvePointViewModel>(okResult.Value);
             Assert.Equal(updatedCp.Id, returnedCp.Id);
@@ -95,20 +107,26 @@ namespace P7CreateRestApiUnitTests.ControllerUnitTests
         [Fact]
         public async Task UpdateCurvePoint_MismatchedId_ReturnsBadRequest()
         {
+            // ARRANGE
             var model = new UpdateCurvePointViewModel { Id = 2 };
 
+            // ACT
             var result = await _controller.UpdateCurvePoint(1, model);
 
+            // ASSERT
             Assert.IsType<BadRequestObjectResult>(result);
         }
 
         [Fact]
         public async Task DeleteCurvePoint_ValidId_ReturnsOk()
         {
+            // ARRANGE
             _mockService.Setup(s => s.RemoveCurvePoint(1)).Returns(Task.CompletedTask);
 
+            // ACT
             var result = await _controller.DeleteCurvePoint(1);
 
+            // ASSERT
             Assert.IsType<OkResult>(result);
         }
     }

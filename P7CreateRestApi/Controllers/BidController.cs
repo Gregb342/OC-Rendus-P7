@@ -1,6 +1,5 @@
 using Dot.Net.WebApi.Domain;
 using Microsoft.AspNetCore.Mvc;
-using P7CreateRestApi.Services;
 using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels;
 using P7CreateRestApi.ViewsModels.Bids;

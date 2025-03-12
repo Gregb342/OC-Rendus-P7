@@ -13,7 +13,7 @@ namespace P7CreateRestApi.Services
         public BidService(IBidRepository bidRepository)
         {
             _bidRepository = bidRepository;
-        }   
+        }
 
         public async Task AddBid(Bid bid)
         {
@@ -22,7 +22,7 @@ namespace P7CreateRestApi.Services
 
         public async Task<List<GetBidViewModel>> GetAllBids()
         {
-            List<Bid> allBids = (List<Bid>) await _bidRepository.GetAllAsync();
+            List<Bid> allBids = (List<Bid>)await _bidRepository.GetAllAsync();
 
             return allBids.Select(b => new GetBidViewModel
             {
@@ -57,7 +57,7 @@ namespace P7CreateRestApi.Services
 
         public async Task<GetBidViewModel> UpdateBid(UpdateBidViewModel newBid)
         {
-            Bid existingBid = await _bidRepository.GetByIdAsync(newBid.BidId) 
+            Bid existingBid = await _bidRepository.GetByIdAsync(newBid.BidId)
                         ?? throw new KeyNotFoundException($"L'offre {newBid.BidId} n'existe pas");
 
             existingBid.Account = newBid.Account;
@@ -70,8 +70,8 @@ namespace P7CreateRestApi.Services
 
             getBidViewModel.BidId = existingBid.BidId;
             getBidViewModel.Account = existingBid.Account;
-            getBidViewModel.BidQuantity= existingBid.BidQuantity;
-            getBidViewModel.BidType= existingBid.BidType;
+            getBidViewModel.BidQuantity = existingBid.BidQuantity;
+            getBidViewModel.BidType = existingBid.BidType;
 
             return getBidViewModel;
         }

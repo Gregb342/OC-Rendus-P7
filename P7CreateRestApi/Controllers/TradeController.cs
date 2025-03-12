@@ -1,7 +1,7 @@
+using Dot.Net.WebApi.Domain;
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels.Trades;
-using Dot.Net.WebApi.Domain;
 
 namespace Dot.Net.WebApi.Controllers
 {

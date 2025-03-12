@@ -170,3 +170,9 @@ C:\Users\Serge\Documents\Cours OCR\Projet 7\OC-Rendus-P7\P7CreateRestApiUnitTest
 C:\Users\Serge\Documents\Cours OCR\Projet 7\OC-Rendus-P7\P7CreateRestApiUnitTests\obj\Debug\net6.0\P7CreateRestApiUnitTests.pdb
 C:\Users\Serge\Documents\Cours OCR\Projet 7\OC-Rendus-P7\P7CreateRestApiUnitTests\obj\Debug\net6.0\P7CreateRestApiUnitTests.genruntimeconfig.cache
 C:\Users\Serge\Documents\Cours OCR\Projet 7\OC-Rendus-P7\P7CreateRestApiUnitTests\obj\Debug\net6.0\ref\P7CreateRestApiUnitTests.dll
+C:\Users\Serge\Documents\Cours OCR\Projet 7\OC-Rendus-P7\P7CreateRestApiUnitTests\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Serge\Documents\Cours OCR\Projet 7\OC-Rendus-P7\P7CreateRestApiUnitTests\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\Serge\Documents\Cours OCR\Projet 7\OC-Rendus-P7\P7CreateRestApiUnitTests\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\Serge\Documents\Cours OCR\Projet 7\OC-Rendus-P7\P7CreateRestApiUnitTests\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Serge\Documents\Cours OCR\Projet 7\OC-Rendus-P7\P7CreateRestApiUnitTests\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Serge\Documents\Cours OCR\Projet 7\OC-Rendus-P7\P7CreateRestApiUnitTests\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll

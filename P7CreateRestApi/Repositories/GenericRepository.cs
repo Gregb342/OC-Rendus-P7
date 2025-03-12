@@ -1,5 +1,4 @@
 ﻿using Dot.Net.WebApi.Data;
-using Dot.Net.WebApi.Domain;
 using Microsoft.EntityFrameworkCore;
 using P7CreateRestApi.Repositories.Interfaces;
 using System.Linq.Expressions;
@@ -48,7 +47,7 @@ namespace P7CreateRestApi.Repositories
             {
                 _context.Set<T>().Remove(entity);
                 await _context.SaveChangesAsync();
-            }            
+            }
         }
 
     }

@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dot.Net.WebApi.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels.Rules;
-using Dot.Net.WebApi.Controllers;
 
 namespace P7CreateRestApiUnitTests.ControllerUnitTests
 {

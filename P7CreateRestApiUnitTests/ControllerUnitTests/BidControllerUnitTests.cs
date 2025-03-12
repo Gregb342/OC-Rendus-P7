@@ -1,13 +1,10 @@
-﻿using Xunit;
-using Moq;
-using Microsoft.AspNetCore.Mvc;
-using P7CreateRestApi.Services.Interfaces;
-using Dot.Net.WebApi.Controllers;
-using P7CreateRestApi.ViewsModels.Bids;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Dot.Net.WebApi.Controllers;
 using Dot.Net.WebApi.Domain;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels;
+using P7CreateRestApi.ViewsModels.Bids;
 
 namespace P7CreateRestApiUnitTests.ControllerUnitTests
 {

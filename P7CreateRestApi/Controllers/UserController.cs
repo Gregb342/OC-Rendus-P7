@@ -1,8 +1,8 @@
 using Dot.Net.WebApi.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.Models;
+using P7CreateRestApi.Services.Interfaces;
 
 [Authorize(Roles = Roles.Admin)]
 [ApiController]
@@ -63,7 +63,7 @@ public class UserController : ControllerBase
         }
 
         await _userService.DeleteUserAsync(userId);
-        
+
         return Ok();
     }
 }

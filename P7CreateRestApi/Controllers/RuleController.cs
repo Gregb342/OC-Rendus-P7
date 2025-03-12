@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels.Rules;
-using Dot.Net.WebApi.Controllers;
 
 namespace Dot.Net.WebApi.Controllers
 {

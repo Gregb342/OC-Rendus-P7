@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using P7CreateRestApi.Models;
 using System.IdentityModel.Tokens.Jwt;
@@ -18,7 +17,7 @@ public class AuthController : ControllerBase
     private readonly IConfiguration _configuration;
     private readonly ILogger<AuthController> _logger;
 
-    public AuthController(UserManager<ApplicationUser> userManager, 
+    public AuthController(UserManager<ApplicationUser> userManager,
                           RoleManager<IdentityRole> roleManager,
                           IConfiguration configuration,
                           ILogger<AuthController> logger)
@@ -42,7 +41,7 @@ public class AuthController : ControllerBase
         return Ok("Utilisateur créé avec succès !");
     }
 
-    [HttpPost("login")] 
+    [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
         var user = await _userManager.FindByNameAsync(model.Email);
@@ -55,7 +54,7 @@ public class AuthController : ControllerBase
         var authClaims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) 
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
         // Ajout des rôles au token
@@ -72,10 +71,10 @@ public class AuthController : ControllerBase
         );
         _logger.LogInformation($"Utilisateur {user.Id} connecté. Token généré et envoyé.");
 
-        return Ok(new 
-        { 
+        return Ok(new
+        {
             message = "Utilisateur connecté, token de connexion généré.",
-            token = new JwtSecurityTokenHandler().WriteToken(token) 
+            token = new JwtSecurityTokenHandler().WriteToken(token)
         });
     }
 

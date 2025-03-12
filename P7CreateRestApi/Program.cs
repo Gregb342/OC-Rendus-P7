@@ -84,7 +84,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IBidRepository, BidRepository>();
-builder.Services.AddScoped<IBidService, BidService>();  
+builder.Services.AddScoped<IBidService, BidService>();
 builder.Services.AddScoped<ICurvePointRepository, CurvePointRepository>();
 builder.Services.AddScoped<ICurvePointService, CurvePointService>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
@@ -170,7 +170,7 @@ async Task SeedAdminUser(IServiceProvider serviceProvider)
     {
         await roleManager.CreateAsync(new IdentityRole(adminRole));
     }
-    
+
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
     if (adminUser == null)
     {

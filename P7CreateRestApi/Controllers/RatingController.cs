@@ -1,7 +1,7 @@
+using Dot.Net.WebApi.Controllers.Domain;
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Services.Interfaces;
 using P7CreateRestApi.ViewsModels.Ratings;
-using Dot.Net.WebApi.Controllers.Domain;
 
 namespace Dot.Net.WebApi.Controllers
 {
