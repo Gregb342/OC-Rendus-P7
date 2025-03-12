@@ -1,5 +1,4 @@
 using Dot.Net.WebApi.Domain;
-using Moq;
 using P7CreateRestApi.Repositories.Interfaces;
 using P7CreateRestApi.Services;
 using P7CreateRestApi.ViewsModels;

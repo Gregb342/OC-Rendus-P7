@@ -102,5 +102,40 @@
             <param name="id">Id du curvepoint à supprimer</param>
             <returns>Ok</returns>
         </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RatingController.AddRating(P7CreateRestApi.ViewsModels.Ratings.AddRatingViewModel)">
+            <summary>
+            Ajout de Rating
+            </summary>
+            <param name="model">AddRatingViewModel</param>
+            <returns>Le DTO basé sur l'objet enregistré en base.</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RatingController.GetRating(System.Int32)">
+            <summary>
+            Obtenir un rating à partir de son id
+            </summary>
+            <param name="id"></param>
+            <returns>DTO GetRatingViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RatingController.GetAllRatings">
+            <summary>
+            Retourne tout les Rating présents en base
+            </summary>
+            <returns>Une liste de GetRatingViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RatingController.UpdateRating(System.Int32,P7CreateRestApi.ViewsModels.Ratings.UpdateRatingViewModel)">
+            <summary>
+            Met à jour un objet Rating via DTO
+            </summary>
+            <param name="id">ID du Rating à mettre à jour</param>
+            <param name="model">DTO UpdateCurvePointViewModel</param>
+            <returns>GetRatingViewModel mis à jour</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.RatingController.DeleteRating(System.Int32)">
+            <summary>
+            Supprime un rating
+            </summary>
+            <param name="id">Id du rating à supprimer</param>
+            <returns>Ok</returns>
+        </member>
     </members>
 </doc>
