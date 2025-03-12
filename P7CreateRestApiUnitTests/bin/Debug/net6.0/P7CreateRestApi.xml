@@ -67,5 +67,40 @@
             <param name="id">Id du bid à supprimer</param>
             <returns>Ok si c'est ok.</returns>
         </member>
+        <member name="M:Dot.Net.WebApi.Controllers.CurvePointController.AddCurvePoint(P7CreateRestApi.ViewsModels.CurvePoints.AddCurvePointViewModel)">
+            <summary>
+            Ajout de CurvePoint
+            </summary>
+            <param name="model">AddCurvePointViewModel</param>
+            <returns>Le DTO basé sur l'objet enregistré en base.</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.CurvePointController.GetCurvePoint(System.Int32)">
+            <summary>
+            Obtenir un curvepoint à partir de son id
+            </summary>
+            <param name="id"></param>
+            <returns>DTO GetCurvePointViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.CurvePointController.GetAllCurvePoints">
+            <summary>
+            Retourne tout les CurvePoint présents en base
+            </summary>
+            <returns>Une liste de GetCurvePointViewModel</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.CurvePointController.UpdateCurvePoint(System.Int32,P7CreateRestApi.ViewsModels.CurvePoints.UpdateCurvePointViewModel)">
+            <summary>
+            Met à jour un objet CurvePoint via DTO
+            </summary>
+            <param name="id">ID du Curvepoint à mettre à jour</param>
+            <param name="model">DTO UpdateCurvePointViewModel</param>
+            <returns>GetCurvePointViewModel mis à jour</returns>
+        </member>
+        <member name="M:Dot.Net.WebApi.Controllers.CurvePointController.DeleteCurvePoint(System.Int32)">
+            <summary>
+            Supprime un curvepoint
+            </summary>
+            <param name="id">Id du curvepoint à supprimer</param>
+            <returns>Ok</returns>
+        </member>
     </members>
 </doc>

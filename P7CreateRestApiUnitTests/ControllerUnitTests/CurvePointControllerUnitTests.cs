@@ -29,7 +29,7 @@ namespace P7CreateRestApiUnitTests.ControllerUnitTests
 
             // ASSERT
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedCurvePoint = Assert.IsType<CurvePoint>(okResult.Value);
+            var returnedCurvePoint = Assert.IsType<AddCurvePointViewModel>(okResult.Value);
             Assert.Equal(model.CurveId, returnedCurvePoint.CurveId);
         }
 
