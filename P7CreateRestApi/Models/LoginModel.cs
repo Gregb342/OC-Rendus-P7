@@ -2,6 +2,7 @@
 {
     public class LoginModel
     {
-        // TODO: implement properties needeed for login model.
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -1,5 +1,8 @@
 using Dot.Net.WebApi.Controllers.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Services.Interfaces;
+using P7CreateRestApi.ViewsModels.Ratings;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -7,52 +10,93 @@ namespace Dot.Net.WebApi.Controllers
     [Route("[controller]")]
     public class RatingController : ControllerBase
     {
-        // TODO: Inject Rating service
+        private readonly IRatingService _ratingService;
 
-        [HttpGet]
-        [Route("list")]
-        public IActionResult Home()
+        public RatingController(IRatingService ratingService)
         {
-            // TODO: find all Rating, add to model
-            return Ok();
+            _ratingService = ratingService;
         }
 
-        [HttpGet]
-        [Route("add")]
-        public IActionResult AddRatingForm([FromBody]Rating rating)
-        {
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("validate")]
-        public IActionResult Validate([FromBody]Rating rating)
-        {
-            // TODO: check data valid and save to db, after saving return Rating list
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
-        {
-            // TODO: get Rating by Id and to model then show to the form
-            return Ok();
-        }
-
+        /// <summary>
+        /// Ajout de Rating
+        /// </summary>
+        /// <param name="model">AddRatingViewModel</param>
+        /// <returns>Le DTO basé sur l'objet enregistré en base.</returns>
+        [Authorize]
         [HttpPost]
-        [Route("update/{id}")]
-        public IActionResult UpdateRating(int id, [FromBody] Rating rating)
+        [Route("")]
+        public async Task<IActionResult> AddRating([FromBody] AddRatingViewModel model)
         {
-            // TODO: check required fields, if valid call service to update Rating and return Rating list
-            return Ok();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            Rating rating = new Rating
+            {
+                MoodysRating = model.MoodysRating,
+                SandPRating = model.SandPRating,
+                FitchRating = model.FitchRating,
+                OrderNumber = model.OrderNumber
+            };
+
+            await _ratingService.AddRating(rating);
+            return Ok(model);
         }
 
-        [HttpDelete]
-        [Route("{id}")]
-        public IActionResult DeleteRating(int id)
+        /// <summary>
+        /// Obtenir un rating à partir de son id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>DTO GetRatingViewModel</returns>
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRating(int id)
         {
-            // TODO: Find Rating by Id and delete the Rating, return to Rating list
+            GetRatingViewModel rating = await _ratingService.GetRatingByIdAsync(id);
+            return Ok(rating);
+        }
+
+        /// <summary>
+        /// Retourne tout les Rating présents en base
+        /// </summary>
+        /// <returns>Une liste de GetRatingViewModel</returns>
+        [Authorize]
+        [HttpGet("All")]
+        public async Task<IActionResult> GetAllRatings()
+        {
+            List<GetRatingViewModel> ratings = await _ratingService.GetAllRatings();
+            return Ok(ratings);
+        }
+
+        /// <summary>
+        /// Met à jour un objet Rating via DTO
+        /// </summary>
+        /// <param name="id">ID du Rating à mettre à jour</param>
+        /// <param name="model">DTO UpdateCurvePointViewModel</param>
+        /// <returns>GetRatingViewModel mis à jour</returns>
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateRating(int id, [FromBody] UpdateRatingViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (id != model.Id)
+                return BadRequest("L'ID dans l'URL ne correspond pas à l'ID du corps de la requête.");
+
+            GetRatingViewModel updatedRating = await _ratingService.UpdateRating(model);
+            return Ok(updatedRating);
+        }
+
+        /// <summary>
+        /// Supprime un rating
+        /// </summary>
+        /// <param name="id">Id du rating à supprimer</param>
+        /// <returns>Ok</returns>
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRating(int id)
+        {
+            await _ratingService.RemoveRating(id);
             return Ok();
         }
     }
