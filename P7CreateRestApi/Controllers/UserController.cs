@@ -1,5 +1,6 @@
 using Dot.Net.WebApi.Domain;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Models;
 using P7CreateRestApi.Services.Interfaces;
@@ -9,22 +10,26 @@ using P7CreateRestApi.Services.Interfaces;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly IUserService _userService;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public UserController(IUserService userService)
+    public UserController(UserManager<ApplicationUser> userManager)
     {
-        _userService = userService;
+        _userManager = userManager;
     }
 
     /// <summary>
     /// Obtenir la liste de tout les utilisateurs
     /// </summary>
     /// <returns></returns>
-    [Authorize]
+    [Authorize(Roles = Roles.Admin)]
     [HttpGet]
+    [Route("All")]
     public async Task<IActionResult> GetAllUsers()
     {
-        List<ApplicationUser> users = (List<ApplicationUser>) await _userService.GetAllUsersAsync();
+        List<ApplicationUser> users = _userManager.Users.ToList();
+
+        if (users.Count <= 0) return NotFound("Il n'y a pas d'utilisateurs inscrits actuellement");
+
         return Ok(users);
     }
 
@@ -34,16 +39,12 @@ public class UserController : ControllerBase
     /// <param name="id">Id de l'utilisateur</param>
     /// <returns>Applicationuser</returns>
     /// <exception cref="ArgumentException"></exception>
-    [Authorize]
+    [Authorize(Roles = Roles.Admin)]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetUserById(string id)
+    public async Task<IActionResult> GetUserById(string userId)
     {
-        if (!int.TryParse(id, out int userId))
-        {
-            throw new ArgumentException($"L'ID utilisateur '{id}' n'est pas un entier valide.");
-        }
+        ApplicationUser user = await _userManager.FindByIdAsync(userId);
 
-        ApplicationUser user = await _userService.GetUserByIdAsync(userId);
         if (user is null) return NotFound("Utilisateur introuvable");
         return Ok(user);
     }
@@ -54,11 +55,17 @@ public class UserController : ControllerBase
     /// <param name="user">ApplicationUser</param>
     /// <returns>Ok</returns>
     [Authorize(Roles = "Admin, Manager")]
-    [HttpPost]
-    public async Task<IActionResult> CreateUser([FromBody] ApplicationUser user)
+    [HttpPost("create")]
+    public async Task<IActionResult> CreateUser([FromBody] RegisterModel model)
     {
-        await _userService.CreateUserAsync(user);
-        return Ok("Utilisateur créé avec succès");
+        var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+        var result = await _userManager.CreateAsync(user, model.Password);
+
+        if (!result.Succeeded)
+            return BadRequest(result.Errors);
+        var roles = await _userManager.AddToRoleAsync(user, "User");
+
+        return Ok("Utilisateur créé avec succès !");
     }
 
     /// <summary>
@@ -71,9 +78,12 @@ public class UserController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUser(string id, [FromBody] ApplicationUser user)
     {
-        var updatedUser = await _userService.UpdateUserAsync(user);
-        if (updatedUser == null) return NotFound("Utilisateur introuvable");
-        return Ok(updatedUser);
+        var result = await _userManager.UpdateAsync(user);
+
+        if (!result.Succeeded)
+            return NotFound(result.Errors);
+
+        return Ok($"Utilisateur {user} mis à jour avec succés");
     }
 
     /// <summary>
@@ -86,13 +96,8 @@ public class UserController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUser(ApplicationUser user)
     {
-        if (!int.TryParse(user.Id, out int userId))
-        {
-            throw new ArgumentException($"L'ID utilisateur '{user.Id}' n'est pas un entier valide.");
-        }
+        await _userManager.DeleteAsync(user);
 
-        await _userService.DeleteUserAsync(userId);
-
-        return Ok();
+        return Ok($"Utilisateur {user.UserName} supprimé.");
     }
 }
