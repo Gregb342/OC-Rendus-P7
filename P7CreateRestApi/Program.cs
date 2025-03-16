@@ -12,6 +12,7 @@ using P7CreateRestApi.Repositories.Interfaces;
 using P7CreateRestApi.Services;
 using P7CreateRestApi.Services.Interfaces;
 using Serilog;
+using Serilog.Events;
 using System.Reflection;
 using System.Text;
 
@@ -103,6 +104,10 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .MinimumLevel.Override("System", LogEventLevel.Information)
+    .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
     .WriteTo.Console()
     .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
@@ -144,6 +149,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<LoggingMiddleware>();
 
 app.UseHttpsRedirection();
 
