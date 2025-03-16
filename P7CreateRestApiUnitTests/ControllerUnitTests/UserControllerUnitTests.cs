@@ -158,10 +158,11 @@ namespace P7CreateRestApiUnitTests.ControllerUnitTests
         {
             // Arrange
             var user = new ApplicationUser { Id = "1", UserName = "User1" };
+            _userManagerMock.Setup(um => um.FindByIdAsync(user.Id)).ReturnsAsync(user);
             _userManagerMock.Setup(um => um.DeleteAsync(user)).ReturnsAsync(IdentityResult.Success);
 
             // Act
-            var result = await _controller.DeleteUser(user);
+            var result = await _controller.DeleteUser(user.Id);
 
             // Assert
             Assert.IsType<OkObjectResult>(result);

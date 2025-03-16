@@ -236,13 +236,5 @@
             <param name="user">ApplicationUser</param>
             <returns>Utilisateur mis à jour</returns>
         </member>
-        <member name="M:UserController.DeleteUser(Dot.Net.WebApi.Domain.ApplicationUser)">
-            <summary>
-            Supprimer un utilisateur
-            </summary>
-            <param name="user">Application User</param>
-            <returns>Ok</returns>
-            <exception cref="T:System.ArgumentException"></exception>
-        </member>
     </members>
 </doc>

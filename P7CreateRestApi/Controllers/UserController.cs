@@ -86,18 +86,22 @@ public class UserController : ControllerBase
         return Ok($"Utilisateur {user} mis à jour avec succés");
     }
 
-    /// <summary>
-    /// Supprimer un utilisateur
-    /// </summary>
-    /// <param name="user">Application User</param>
-    /// <returns>Ok</returns>
-    /// <exception cref="ArgumentException"></exception>
-    [Authorize(Roles = "Admin, Manager")]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteUser(ApplicationUser user)
+    public async Task<IActionResult> DeleteUser(string id)
     {
-        await _userManager.DeleteAsync(user);
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound("Utilisateur introuvable.");
+        }
+
+        var result = await _userManager.DeleteAsync(user);
+        if (!result.Succeeded)
+        {
+            return BadRequest(result.Errors);
+        }
 
         return Ok($"Utilisateur {user.UserName} supprimé.");
     }
+
 }
