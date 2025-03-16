@@ -12,10 +12,17 @@ namespace P7CreateRestApi.ViewsModels.Trades
 
         [Required]
         public string AccountType { get; set; }
-
+        [Required]
+        [Range(1, double.MaxValue, ErrorMessage = "La quantité doit être superieure à 0.")]
         public double? BuyQuantity { get; set; }
+        [Required]
+        [Range(1, double.MaxValue, ErrorMessage = "La quantité doit être superieure à 0.")]
         public double? SellQuantity { get; set; }
+        [Required]
+        [Range(1, double.MaxValue, ErrorMessage = "La quantité doit être superieure à 0.")]
         public double? BuyPrice { get; set; }
+        [Required]
+        [Range(1, double.MaxValue, ErrorMessage = "La quantité doit être superieure à 0.")]
         public double? SellPrice { get; set; }
 
         public DateTime? TradeDate { get; set; }
