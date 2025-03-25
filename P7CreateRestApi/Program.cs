@@ -18,21 +18,18 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
-// Add services to the container.
+#region Services
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+#region Swagger
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Mon API", Version = "v1" });
-
-    // Définir le chemin du fichier XML de documentation
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     options.IncludeXmlComments(xmlPath);
-
-    // Ajout du support de l'authentification JWT dans Swagger
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -42,7 +39,6 @@ builder.Services.AddSwaggerGen(options =>
         In = ParameterLocation.Header,
         Description = "Entrez le token JWT ici sous la forme 'Bearer YOUR_TOKEN'"
     });
-
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -58,14 +54,18 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+#endregion
 
+#region Database & Identity
 builder.Services.AddDbContext<LocalDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<LocalDbContext>()
     .AddDefaultTokenProviders();
+#endregion
 
+#region Authentication
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]);
 
 builder.Services.AddAuthentication(options =>
@@ -86,7 +86,9 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true
     };
 });
+#endregion
 
+#region Dependency Injection
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IBidRepository, BidRepository>();
 builder.Services.AddScoped<IBidService, BidService>();
@@ -98,7 +100,9 @@ builder.Services.AddScoped<IRuleRepository, RuleRepository>();
 builder.Services.AddScoped<IRuleService, RuleService>();
 builder.Services.AddScoped<ITradeRepository, TradeRepository>();
 builder.Services.AddScoped<ITradeService, TradeService>();
+#endregion
 
+#region Logging
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -109,9 +113,13 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Host.UseSerilog();
+#endregion
+
+#endregion
 
 var app = builder.Build();
 
+#region Database Initialization
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -130,12 +138,17 @@ using (var scope = app.Services.CreateScope())
     await SeedRolesAsync(services);
     await SeedAdminUser(services);
 }
+#endregion
 
-
+#region Middleware
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<LoggingMiddleware>();
+app.UseHttpsRedirection();
+#endregion
 
-// Configure the HTTP request pipeline.
+#region API Configuration
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -144,19 +157,17 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Findexium API v1");
     });
 }
-app.UseMiddleware<ExceptionHandlingMiddleware>();
-app.UseMiddleware<LoggingMiddleware>();
-
-app.UseHttpsRedirection();
 
 app.MapControllers();
+#endregion
 
+app.Run();
+
+#region Seed Methods
 async Task SeedRolesAsync(IServiceProvider serviceProvider)
 {
     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
     string[] roleNames = { "Admin", "User", "Manager" };
-
     foreach (var roleName in roleNames)
     {
         if (!await roleManager.RoleExistsAsync(roleName))
@@ -177,6 +188,7 @@ async Task SeedAdminUser(IServiceProvider serviceProvider)
     string adminEmail = "admin@example.com";
     string adminPassword = "Admin@123"; // À CHANGER en prod, ou utiliser des variables d'environnement !
 
+
     if (!await roleManager.RoleExistsAsync(adminRole))
     {
         await roleManager.CreateAsync(new IdentityRole(adminRole));
@@ -189,25 +201,23 @@ async Task SeedAdminUser(IServiceProvider serviceProvider)
         {
             UserName = adminEmail,
             Email = adminEmail,
-            EmailConfirmed = true // Optionnel : confirme l'email directement
+            EmailConfirmed = true
         };
 
         var result = await userManager.CreateAsync(adminUser, adminPassword);
         if (result.Succeeded)
         {
             await userManager.AddToRoleAsync(adminUser, adminRole);
-            Console.WriteLine($" Utilisateur Admin créé : {adminEmail}");
+            Console.WriteLine($"Utilisateur Admin créé : {adminEmail}");
         }
         else
         {
-            Console.WriteLine($" Erreur lors de la création de l'admin : {string.Join(", ", result.Errors)}");
+            Console.WriteLine($"Erreur lors de la création de l'admin : {string.Join(", ", result.Errors)}");
         }
     }
     else
     {
-        Console.WriteLine($" L'utilisateur Admin existe déjà : {adminEmail}");
+        Console.WriteLine($"L'utilisateur Admin existe déjà : {adminEmail}");
     }
 }
-
-
-app.Run();
+#endregion
